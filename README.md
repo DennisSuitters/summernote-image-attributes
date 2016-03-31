@@ -32,6 +32,10 @@ $(document).ready(function() {
                 ['remove', ['removeMedia']]
             ],
         },
+        imageAttributes:{
+            icon:'<i class="fa fa-pencil"/>',
+            removeEmpty:false // true = remove attributes | false = leave empty if present
+        }
     });
 });
 ```
