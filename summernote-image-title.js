@@ -11,11 +11,25 @@
         factory(window.jQuery);
     }
 }(function ($) {
-    $.extend($.summernote.lang['en-US'], {
-        imageTitle: {
-            edit: 'Edit title',
-            fieldLabel: 'Title',
+    $.extend(true, $.summernote.lang, {
+        'en-US': {
+            imageTitle: {
+                edit: 'Edit title',
+                fieldLabel: 'Title'
+            }
         },
+        'fr-FR': {
+            imageTitle: {
+                edit: 'Modifier le titre',
+                fieldLabel: 'Titre'
+            },
+        },
+        'ko-KR': {
+            imageTitle: {
+                edit: '제목 바꾸기',
+                fieldLabel: '제목'
+            },
+        }
     });
 
     $.extend($.summernote.plugins, {
