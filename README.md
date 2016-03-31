@@ -13,13 +13,9 @@ Include the following code after Summernote:
 <script src="summernote-image-title.js"></script>
 ```
 
-#### 2. Include language file
+#### 2. Supported languages
 
-Eventually include language file (currently available in French, contributions welcomed!)
-
-```html
-<script src="lang/summernote-image-title-fr-FR.js"></script>
-```
+Currently available in French, English and Korean only, contributions welcomed!
 
 #### 3. Summernote options
 
