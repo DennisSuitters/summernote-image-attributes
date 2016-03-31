@@ -1,4 +1,4 @@
-# summernote-image-title
+# summernote-image-attributes
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 Adds a button to the image popover to edit title and alt attributes.
@@ -10,31 +10,26 @@ Adds a button to the image popover to edit title and alt attributes.
 Include the following code after Summernote:
 
 ```html
-<script src="summernote-image-title.js"></script>
+<script src="summernote-image-attributes.js"></script>
 ```
 
 #### 2. Supported languages
 
-Currently available in French, English and Korean only, contributions welcomed!
+Currently available in English!
 
 #### 3. Summernote options
 
 Finally, customize the Summernote image popover.
-You can choose if you want to edit the alt attribute specifically or not with the option `specificAltField`:
 
 ```javascript
 $(document).ready(function() {
     $('#summernote').summernote({
-        imageTitle: {
-          specificAltField: true,
-        },
-        lang: 'fr-FR',
         popover: {
             image: [
+                ['custom', ['imageAttributes']],
                 ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
                 ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                ['remove', ['removeMedia']],
-                ['custom', ['imageTitle']],
+                ['remove', ['removeMedia']]
             ],
         },
     });
