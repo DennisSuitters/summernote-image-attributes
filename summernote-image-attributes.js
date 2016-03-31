@@ -20,7 +20,8 @@
     });
     $.extend($.summernote.options,{
         imageAttributes:{
-            icon:'<i class="fa fa-pencil"/>'
+            icon:'<i class="fa fa-pencil"/>',
+            removeEmpty:true
         }
     })
     $.extend($.summernote.plugins,{
@@ -106,10 +107,25 @@
                 this.showLinkDialog(imgInfo).then(function(imgInfo){
                     ui.hideDialog(self.$dialog);
                     var $img=imgInfo.imgDom;
-                    $img.attr('alt',imgInfo.alt);
-                    $img.attr('title',imgInfo.title);
-                    $img.attr('class',imgInfo.class);
-                    $img.attr('style',imgInfo.style);
+                    if(options.imageAttributes.removeEmpty){
+                        if(!imgInfo.alt){
+                            $img.removeAttr('alt');
+                        }
+                        if(!imgInfo.title){
+                            $img.removeAttr('title');
+                        }
+                        if(!imgInfo.class){
+                            $img.removeAttr('class');
+                        }
+                        if(!imgInfo.style){
+                            $img.removeAttr('style');
+                        }
+                    }else{
+                        $img.attr('alt',imgInfo.alt);
+                        $img.attr('title',imgInfo.title);
+                        $img.attr('class',imgInfo.class);
+                        $img.attr('style',imgInfo.style);
+                    }
                     $note.val(context.invoke('code'));
                     $note.change();
                 });
