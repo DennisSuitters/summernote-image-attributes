@@ -108,16 +108,24 @@
                     ui.hideDialog(self.$dialog);
                     var $img=imgInfo.imgDom;
                     if(options.imageAttributes.removeEmpty){
-                        if(!imgInfo.alt){
+                        if(imgInfo.alt){
+                            $img.attr('alt',imgInfo.alt);
+                        }else{
                             $img.removeAttr('alt');
                         }
-                        if(!imgInfo.title){
+                        if(imgInfo.title){
+                            $img.attr('title',imgInfo.title);
+                        }else{
                             $img.removeAttr('title');
                         }
-                        if(!imgInfo.class){
+                        if(imgInfo.class){
+                            $img.attr('class',imgInfo.class);
+                        }else{
                             $img.removeAttr('class');
                         }
-                        if(!imgInfo.style){
+                        if(imgInfo.style){
+                            $img.attr('style',imgInfo.style);
+                        }else{
                             $img.removeAttr('style');
                         }
                     }else{
