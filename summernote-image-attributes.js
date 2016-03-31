@@ -53,7 +53,7 @@
                 '<div class="form-group">'+
                  '<label class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
                  '<div class="input-group col-xs-10">'+
-                  '<input class="note-image-alt-text form-control" type="text"/>'+
+                  '<input class="note-image-alt-text form-control" type="text">'+
                  '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
