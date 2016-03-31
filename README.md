@@ -19,11 +19,15 @@ Currently available in French, English and Korean only, contributions welcomed!
 
 #### 3. Summernote options
 
-Finally, customize the Summernote image popover:
+Finally, customize the Summernote image popover.
+You can choose if you want to edit the alt attribute specifically or not with the option `specificAltField`:
 
 ```javascript
 $(document).ready(function() {
     $('#summernote').summernote({
+        imageTitle: {
+          specificAltField: true,
+        },
         lang: 'fr-FR',
         popover: {
             image: [
@@ -36,3 +40,8 @@ $(document).ready(function() {
     });
 });
 ```
+
+### Example
+
+You can see a working example [here](http://codepen.io/asiffermann/pen/EKvMMm).
+
