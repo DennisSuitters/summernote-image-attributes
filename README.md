@@ -36,7 +36,4 @@ $(document).ready(function() {
 });
 ```
 
-### Example
-
-You can see a working example [here](http://codepen.io/asiffermann/pen/EKvMMm).
 
