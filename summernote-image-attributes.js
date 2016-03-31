@@ -13,7 +13,7 @@
 }(function ($) {
     $.extend(true,$.summernote.lang, {
         'en-US':{
-            imageTitle: {
+            imageAttributes: {
                 tooltip: 'Image Attributes',
                 title: 'Title',
                 alt: 'Alt',
@@ -23,12 +23,12 @@
         }
     });
     $.extend($.summernote.options,{
-        imageTitle:{
+        imageAttributes:{
             icon:'<i class="fa fa-pencil"/>'
         }
     })
     $.extend($.summernote.plugins, {
-        'imageTitle': function (context) {
+        'imageAttributes': function (context) {
             var self = this;
 
             var ui = $.summernote.ui;
@@ -38,12 +38,12 @@
             var options = context.options;
             var lang = options.langInfo;
 
-            context.memo('button.imageTitle', function () {
+            context.memo('button.imageAttributes', function () {
                 var button = ui.button({
-                    contents: options.imageTitle.icon,
-                    tooltip: lang.imageTitle.tooltip,
+                    contents: options.imageAttributes.icon,
+                    tooltip: lang.imageAttributes.tooltip,
                     click: function (e) {
-                        context.invoke('imageTitle.show');
+                        context.invoke('imageAttributes.show');
                     }
                 });
 
@@ -54,19 +54,19 @@
                 var $container = options.dialogsInBody ? $(document.body) : $editor;
 
 var body = '<div class="form-group">' +
-    '<label class="control-label col-xs-2">' + lang.imageTitle.title + '</label>' +
+    '<label class="control-label col-xs-2">' + lang.imageAttributes.title + '</label>' +
     '<div class="input-group col-xs-10">'+
         '<input class="note-image-title-text form-control" type="text" />' +
     '</div>'+
 '</div>'+
 '<div class="form-group">'+
-    '<label class="control-label col-xs-2">' + lang.imageTitle.alt + '</label>'+
+    '<label class="control-label col-xs-2">' + lang.imageAttributes.alt + '</label>'+
     '<div class="input-group col-xs-10">'+
         '<input class="note-image-alt-text form-control" type="text" />' +
     '</div>'+
 '</div>'+
 '<div class="form-group">'+
-    '<label class="control-label col-xs-2">' + lang.imageTitle.class + '</label>' +
+    '<label class="control-label col-xs-2">' + lang.imageAttributes.class + '</label>' +
     '<div class="input-group col-xs-10">'+
         '<input class="note-image-class-text form-control" type="text" />' +
         '<div class="input-group-btn">'+
@@ -81,7 +81,7 @@ var body = '<div class="form-group">' +
     '</div>'+
 '</div>'+
 '<div class="form-group">'+
-    '<label class="control-label col-xs-2">' + lang.imageTitle.style + '</label>'+
+    '<label class="control-label col-xs-2">' + lang.imageAttributes.style + '</label>'+
     '<div class="input-group col-xs-10">'+
         '<input class="note-image-style-text form-control" type="text" />'+
     '</div>'+
@@ -155,19 +155,15 @@ var body = '<div class="form-group">' +
 
                         $imageTitle.on('keyup paste', function () {
                             var url = $imageTitle.val();
-                            ui.toggleBtn($editBtn, url);
                         }).val(imgInfo.title).trigger('focus');
                         $imageAlt.on('keyup paste', function () {
                             var url = $imageAlt.val();
-                            ui.toggleBtn($editBtn, url);
                         }).val(imgInfo.alt).trigger('focus');
                         $imageClass.on('keyup paste', function () {
                             var url = $imageClass.val();
-                            ui.toggleBtn($editBtn, url);
                         }).val(imgInfo.class).trigger('focus');
                         $imageStyle.on('keyup paste', function () {
                             var url = $imageStyle.val();
-                            ui.toggleBtn($editBtn, url);
                         }).val(imgInfo.style).trigger('focus');
 
 
@@ -176,6 +172,9 @@ var body = '<div class="form-group">' +
 
                     ui.onDialogHidden(self.$dialog, function () {
                         $imageTitle.off('keyup paste keypress');
+                        $imageAlt.off('keyup paste keypress');
+                        $imageClass.off('keyup paste keypress');
+                        $imageStyle.off('keyup paste keypress');
                         $editBtn.off('click');
 
                         if (deferred.state() === 'pending') {
