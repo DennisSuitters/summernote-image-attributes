@@ -3,6 +3,10 @@ A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG
 
 Adds a button to the image popover to edit title, alt, class and style attributes.
 
+![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-popover.png)
+
+![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-dialog.png)
+
 ### Installation
 
 #### 1. Include JS
