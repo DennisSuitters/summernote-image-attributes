@@ -14,7 +14,9 @@
                 title:'Title',
                 alt:'Alt',
                 class:'Class',
-                style:'Style'
+                style:'Style',
+                url:'URL',
+                target:'Target'
             }
         }
     });
@@ -45,43 +47,70 @@
             });
             this.initialize=function(){
                 var $container=options.dialogsInBody?$(document.body):$editor;
-                var body='<div class="form-group">'+
-                 '<label class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
-                 '<div class="input-group col-xs-10">'+
-                    '<input class="note-image-title-text form-control" type="text">'+
-                 '</div>'+
+                var body=''+
+                '<div class="form-group">'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<input class="note-image-attributes-title form-control" type="text">'+
+                    '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                 '<label class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
-                 '<div class="input-group col-xs-10">'+
-                  '<input class="note-image-alt-text form-control" type="text">'+
-                 '</div>'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<input class="note-image-attributes-alt form-control" type="text">'+
+                    '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                 '<label class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
-                 '<div class="input-group col-xs-10">'+
-                  '<input class="note-image-class-text form-control" list="note-image-class-select" type="text">'+
-                  '<div class="input-group-btn">'+
-                   '<select class="note-image-class-select btn btn-default" onchange="$(\'.note-image-class-text\').val($(\'.note-image-class-text\').val()+\' \'+$(this).val());">'+
-                    '<option value="">Select Class</option>'+
-                    '<option value="img-responsive">Responsive</option>'+
-                    '<option value="img-rounded">Rounded</option>'+
-                    '<option value="img-circle">Circle</option>'+
-                    '<option value="img-thumbnail">Thumbnail</option>'+
-                   '</select>'+
-                  '</div>'+
-                 '</div>'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<input class="note-image-attributes-class form-control" list="note-image-class-select" type="text">'+
+                        '<div class="input-group-btn">'+
+                            '<select class="note-image-attributes-class-select btn btn-default" onchange="$(\'.note-image-attributes-class\').val($(\'.note-image-attributes-class\').val()+\' \'+$(this).val());">'+
+                                '<option value="">Select Class</option>'+
+                                '<option value="img-responsive">Responsive</option>'+
+                                '<option value="img-rounded">Rounded</option>'+
+                                '<option value="img-circle">Circle</option>'+
+                                '<option value="img-thumbnail">Thumbnail</option>'+
+                            '</select>'+
+                        '</div>'+
+                    '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                 '<label class="control-label col-xs-2">'+lang.imageAttributes.style+'</label>'+
-                 '<div class="input-group col-xs-10">'+
-                  '<input class="note-image-style-text form-control" type="text">'+
-                 '</div>'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.style+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<input class="note-image-attributes-style form-control" type="text">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.url+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<div class="input-group-btn">'+
+                            '<select class="note-image-attributes-url-type btn btn-default">'+
+                                '<option value="http://">http://</option>'+
+                                '<option value="https://">https://</option>'+
+                                '<option value="mailto:">mailto:</option>'+
+                                '<option value="tel:">tel:</option>'+
+                            '</select>'+
+                        '</div>'+
+                        '<input class="note-image-attributes-url form-control" type="text">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="control-label col-xs-2">'+lang.imageAttributes.target+'</label>'+
+                    '<div class="input-group col-xs-10">'+
+                        '<select class="note-image-attributes-target-select form-control">'+
+                            '<option value="_self">Self</option>'+
+                            '<option value="_blank">Blank</option>'+
+                            '<option value="_top">Top</option>'+
+                            '<option value="_parent">Parent</option>'+
+                        '</select>'+
+                    '</div>'+
                 '</div>';
+
                 this.$dialog=ui.dialog({
                     title:'Image Attributes',
                     body:body,
-                    footer:'<button href="#" class="btn btn-primary note-image-title-btn">OK</button>'
+                    footer:'<button href="#" class="btn btn-primary note-image-attributes-btn">OK</button>'
                 }).render().appendTo($container);
             };
             this.destroy=function(){
@@ -104,9 +133,15 @@
                     class:$img.attr('class'),
                     style:$img.attr('style')
                 };
+                var lnkInfo={
+                    lnkDom:$img,
+                    url:$img.attr('href'),
+                    target:$img.attr('target')
+                }
                 this.showLinkDialog(imgInfo).then(function(imgInfo){
                     ui.hideDialog(self.$dialog);
                     var $img=imgInfo.imgDom;
+                    var $lnk=lnkInfo.lnkDom;
                     if(options.imageAttributes.removeEmpty){
                         if(imgInfo.alt){
                             $img.attr('alt',imgInfo.alt);
@@ -140,11 +175,14 @@
             };
             this.showLinkDialog=function(imgInfo){
                 return $.Deferred(function(deferred){
-                    var $imageTitle=self.$dialog.find('.note-image-title-text');
-                    var $imageAlt=self.$dialog.find('.note-image-alt-text');
-                    var $imageClass=self.$dialog.find('.note-image-class-text');
-                    var $imageStyle=self.$dialog.find('.note-image-style-text');
-                    var $editBtn=self.$dialog.find('.note-image-title-btn');
+                    var $imageTitle=self.$dialog.find('.note-image-attributes-title');
+                    var $imageAlt=self.$dialog.find('.note-image-attributes-alt');
+                    var $imageClass=self.$dialog.find('.note-image-attributes-class');
+                    var $imageStyle=self.$dialog.find('.note-image-attributes-style');
+                    var $linkUrlType=self.$dialog.find('.note-image-attributes-type');
+                    var $linkUrl=self.$dialog.find('.note-image-attributes-url');
+                    var $linkTarget=self.$dialog.find('.note-image-attributes-target');
+                    var $editBtn=self.$dialog.find('.note-image-attributes-btn');
                     ui.onDialogShown(self.$dialog,function(){
                         context.triggerEvent('dialog.shown');
                         $editBtn.click(function(event){
