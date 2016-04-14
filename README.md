@@ -5,7 +5,8 @@ Adds a button to the image popover to edit title, alt, class and style attribute
 
 ![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-popover.png)
 
-![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-dialog.png)
+![summernote-image-attributes-modal](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-dialog.png)
+The red box outlines what I'm currently trying to get working. Looking for help on this, with attribution given to those that solve it.
 
 ### Installation
 
