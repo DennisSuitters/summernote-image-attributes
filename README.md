@@ -47,3 +47,7 @@ $(document).ready(function() {
     });
 });
 ```
+
+### Contributors
+- Add links to Image
+  - Thank you to [minidc](https://github.com/ninidc)
