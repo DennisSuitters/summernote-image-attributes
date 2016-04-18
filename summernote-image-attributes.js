@@ -88,14 +88,6 @@
                 '<div class="form-group">' +
                     '<label class="control-label col-xs-2">' + lang.imageAttributes.href + '</label>' +
                     '<div class="input-group col-xs-10">' +
-                        '<div class="input-group-btn">' +
-                            '<select class="note-image-attributes-protocol btn btn-default">' +
-                                '<option value="http://">http://</option>' +
-                                '<option value="https://">https://</option>' +
-                                '<option value="mailto:">mailto:</option>' +
-                                '<option value="tel:">tel:</option>' +
-                            '</select>' +
-                        '</div>' +
                         '<input class="note-image-attributes-href form-control" type="text">' +
                     '</div>' +
                 '</div>' +
@@ -134,18 +126,18 @@
             this.show = function(){
 
                 var $img=$($editable.data('target'));
-                var $lnk=$($editable.data('target'));
+                var $lnk=$($editable.data('target')).parent();
                 var imgInfo={
                     imgDom:$img,
                     title:$img.attr('title'),
                     alt:$img.attr('alt'),
                     class:$img.attr('class'),
-                    style:$img.attr('style'),
+                    style:$img.attr('style')
                 };
                 var lnkInfo={
                     lnkDom:$lnk,
                     target:$lnk.attr('target'),
-                    href:$lnk.attr('href'),
+                    href:$lnk.attr('href')
                 }
                 this.showLinkDialog(imgInfo)
                     .then(function(imgInfo){
@@ -153,6 +145,9 @@
                         ui.hideDialog(self.$dialog);
 
                         var $img=imgInfo.imgDom;
+                        var $lnk=lnkInfo.lnkDom;
+                        $lnk.attr('target',lnkInfo.target);
+                        $lnk.attr('href',lnkInfo.href);
 
                         if(options.imageAttributes.removeEmpty){
                             if(imgInfo.alt){
@@ -192,7 +187,7 @@
                         }
 
                         if(lnkInfo.url) {
-                            $img.wrap('<a target="' + lnkInfo.target + '" href="' + lnkInfo.protocol + lnkInfo.href + '"></a>');
+                            $img.wrap('<a target="' + lnkInfo.target + '" href="' + lnkInfo.href + '"></a>');
                         }
 
                         $note.val(context.invoke('code'));
@@ -207,7 +202,6 @@
                     var $imageAlt=self.$dialog.find('.note-image-attributes-alt');
                     var $imageClass=self.$dialog.find('.note-image-attributes-class');
                     var $imageStyle=self.$dialog.find('.note-image-attributes-style');
-                    var $lnkProtocol=self.$dialog.find('.note-image-attributes-protocol');
                     var $lnkHref=self.$dialog.find('.note-image-attributes-href');
                     var $lnkTarget=self.$dialog.find('.note-image-attributes-target');
                     var $editBtn=self.$dialog.find('.note-image-attributes-btn');
@@ -222,7 +216,6 @@
                                 class:$imageClass.val(),
                                 title:$imageTitle.val(),
                                 style:$imageStyle.val(),
-                                protocol:$lnkProtocol.val(),
                                 href:$lnkHref.val(),
                                 target:$lnkTarget.val()
                             });
@@ -240,9 +233,6 @@
                             var url=$imageStyle.val();
                         }).val(imgInfo.style).trigger('focus');
 
-                        $lnkProtocol.on('keyup paste',function(){
-                            var url=$lnkProtocol.val();
-                        }).val(lnkInfo.protocol).trigger('focus');
                         $lnkHref.on('keyup paste',function(){
                             var url=$lnkHref.val();
                         }).val(lnkInfo.href).trigger('focus');
@@ -257,9 +247,8 @@
                             $imageAlt,
                             $imageClass,
                             $imageStyle,
-                            $linkProtocol,
-                            $linkUrl,
-                            $linkTarget,
+                            $lnkUrl,
+                            $lnkTarget,
                             $editBtn
                         );
                     });
@@ -269,9 +258,8 @@
                         $imageAlt.off('keyup paste keypress');
                         $imageClass.off('keyup paste keypress');
                         $imageStyle.off('keyup paste keypress');
-                        $linkProtocol.off('keyup paste keypress');
-                        $linkUrl.off('keyup paste keypress');
-                        $linkTarget.off('keyup paste keypress');
+                        $lnkUrl.off('keyup paste keypress');
+                        $lnkTarget.off('keyup paste keypress');
                         $editBtn.off('click');
                         if(deferred.state()==='pending'){
                             deferred.reject();
