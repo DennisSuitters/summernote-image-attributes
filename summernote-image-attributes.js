@@ -7,6 +7,7 @@
         factory(window.jQuery);
     }
 }(function($){
+
     $.extend(true,$.summernote.lang,{
         'en-US':{
             imageAttributes:{
@@ -28,6 +29,7 @@
     })
     $.extend($.summernote.plugins,{
         'imageAttributes':function(context){
+
             var self=this;
             var ui=$.summernote.ui;
             var $note=context.layoutInfo.note;
@@ -35,6 +37,7 @@
             var $editable=context.layoutInfo.editable;
             var options=context.options;
             var lang=options.langInfo;
+
             context.memo('button.imageAttributes',function(){
                 var button=ui.button({
                     contents:options.imageAttributes.icon,
@@ -45,6 +48,7 @@
                 });
                 return button.render();
             });
+
             this.initialize=function(){
                 var $container=options.dialogsInBody?$(document.body):$editor;
                 var body=''+
@@ -92,13 +96,13 @@
                                 '<option value="tel:">tel:</option>'+
                             '</select>'+
                         '</div>'+
-                        '<input class="note-image-attributes-url form-control" type="text">'+
+                        '<input class="note-image-attributes-url form-control" type="text" name="url">'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.target+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<select class="note-image-attributes-target-select form-control">'+
+                        '<select class="note-image-attributes-target-select form-control" name="target">'+
                             '<option value="_self">Self</option>'+
                             '<option value="_blank">Blank</option>'+
                             '<option value="_top">Top</option>'+
@@ -113,10 +117,12 @@
                     footer:'<button href="#" class="btn btn-primary note-image-attributes-btn">OK</button>'
                 }).render().appendTo($container);
             };
+
             this.destroy=function(){
                 ui.hideDialog(this.$dialog);
                 this.$dialog.remove();
             };
+
             this.bindEnterKey=function($input,$btn){
                 $input.on('keypress',function(event){
                     if(event.keyCode===13){
@@ -124,8 +130,11 @@
                     }
                 });
             };
-            this.show=function(){
+
+            this.show = function(){
+
                 var $img=$($editable.data('target'));
+
                 var imgInfo={
                     imgDom:$img,
                     title:$img.attr('title'),
@@ -133,56 +142,72 @@
                     class:$img.attr('class'),
                     style:$img.attr('style')
                 };
-                var lnkInfo={
-                    lnkDom:$img,
-                    url:$img.attr('href'),
-                    target:$img.attr('target')
-                }
-                this.showLinkDialog(imgInfo).then(function(imgInfo){
-                    ui.hideDialog(self.$dialog);
-                    var $img=imgInfo.imgDom;
-                    var $lnk=lnkInfo.lnkDom;
-                    if(options.imageAttributes.removeEmpty){
-                        if(imgInfo.alt){
+
+                this.showLinkDialog(imgInfo)
+                    .then(function(imgInfo){
+
+                        ui.hideDialog(self.$dialog);
+
+                        var $img=imgInfo.imgDom;
+
+                        if(options.imageAttributes.removeEmpty){
+                            if(imgInfo.alt){
+                                $img.attr('alt',imgInfo.alt);
+                            } else {
+                                $img.removeAttr('alt');
+                            }
+
+                            if(imgInfo.title){
+                                $img.attr('title',imgInfo.title);
+                            } else {
+                                $img.removeAttr('title');
+                            }
+
+                            if(imgInfo.class){
+                                $img.attr('class',imgInfo.class);
+                            } else {
+                                $img.removeAttr('class');
+                            }
+
+                            if(imgInfo.style){
+                                $img.attr('style',imgInfo.style);
+                            } else {
+                                $img.removeAttr('style');
+                            }
+
+                        } else {
                             $img.attr('alt',imgInfo.alt);
-                        }else{
-                            $img.removeAttr('alt');
-                        }
-                        if(imgInfo.title){
                             $img.attr('title',imgInfo.title);
-                        }else{
-                            $img.removeAttr('title');
-                        }
-                        if(imgInfo.class){
                             $img.attr('class',imgInfo.class);
-                        }else{
-                            $img.removeAttr('class');
-                        }
-                        if(imgInfo.style){
                             $img.attr('style',imgInfo.style);
-                        }else{
-                            $img.removeAttr('style');
                         }
-                    }else{
-                        $img.attr('alt',imgInfo.alt);
-                        $img.attr('title',imgInfo.title);
-                        $img.attr('class',imgInfo.class);
-                        $img.attr('style',imgInfo.style);
-                    }
-                    $note.val(context.invoke('code'));
-                    $note.change();
-                });
+
+                        // Link
+                        if ( $img.parent().is( "a" )) {
+                            $img.unwrap();
+                        }
+
+                        if(imgInfo.url) {
+                            $img.wrap('<a href="' + imgInfo.url + '" target="' + imgInfo.target + '"></a>');
+                        }
+
+                        $note.val(context.invoke('code'));
+                        $note.change();
+                    });
             };
-            this.showLinkDialog=function(imgInfo){
+
+            this.showLinkDialog = function(imgInfo){
                 return $.Deferred(function(deferred){
+
                     var $imageTitle=self.$dialog.find('.note-image-attributes-title');
                     var $imageAlt=self.$dialog.find('.note-image-attributes-alt');
                     var $imageClass=self.$dialog.find('.note-image-attributes-class');
                     var $imageStyle=self.$dialog.find('.note-image-attributes-style');
                     var $linkUrlType=self.$dialog.find('.note-image-attributes-type');
                     var $linkUrl=self.$dialog.find('.note-image-attributes-url');
-                    var $linkTarget=self.$dialog.find('.note-image-attributes-target');
+                    var $linkTarget=self.$dialog.find('.note-image-attributes-target-select');
                     var $editBtn=self.$dialog.find('.note-image-attributes-btn');
+
                     ui.onDialogShown(self.$dialog,function(){
                         context.triggerEvent('dialog.shown');
                         $editBtn.click(function(event){
@@ -193,6 +218,8 @@
                                 class:$imageClass.val(),
                                 title:$imageTitle.val(),
                                 style:$imageStyle.val(),
+                                url:$linkUrl.val(),
+                                target:$linkTarget.val()
                             });
                         });
                         $imageTitle.on('keyup paste',function(){
@@ -209,6 +236,7 @@
                         }).val(imgInfo.style).trigger('focus');
                         self.bindEnterKey($imageTitle,$imageAlt,$imageClass,$imageStyle,$editBtn);
                     });
+
                     ui.onDialogHidden(self.$dialog,function(){
                         $imageTitle.off('keyup paste keypress');
                         $imageAlt.off('keyup paste keypress');
@@ -219,6 +247,7 @@
                             deferred.reject();
                         }
                     });
+
                     ui.showDialog(self.$dialog);
                 });
             };
