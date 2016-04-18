@@ -23,7 +23,7 @@
     });
     $.extend($.summernote.options,{
         imageAttributes:{
-            icon:'<i class="libre libre-edit black"/>',
+            icon:'<i class="fa fa-edit"/>',
             removeEmpty:true
         }
     })
