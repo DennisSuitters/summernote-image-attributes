@@ -23,7 +23,7 @@
     });
     $.extend($.summernote.options,{
         imageAttributes:{
-            icon:'<i class="fa fa-pencil"/>',
+            icon:'<span class="glyphicon glyphicon-pencil"/>',
             removeEmpty:true
         }
     })
@@ -68,15 +68,6 @@
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
                     '<div class="input-group col-xs-10">'+
                         '<input class="note-image-attributes-class form-control" list="note-image-class-select" type="text">'+
-                        '<div class="input-group-btn">'+
-                            '<select class="note-image-attributes-class-select btn btn-default" onchange="$(\'.note-image-attributes-class\').val($(\'.note-image-attributes-class\').val()+\' \'+$(this).val());">'+
-                                '<option value="">Select Class</option>'+
-                                '<option value="img-responsive">Responsive</option>'+
-                                '<option value="img-rounded">Rounded</option>'+
-                                '<option value="img-circle">Circle</option>'+
-                                '<option value="img-thumbnail">Thumbnail</option>'+
-                            '</select>'+
-                        '</div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
@@ -89,12 +80,6 @@
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.url+'</label>'+
                     '<div class="input-group col-xs-10">'+
                         '<div class="input-group-btn">'+
-                            '<select class="note-image-attributes-url-type btn btn-default">'+
-                                '<option value="http://">http://</option>'+
-                                '<option value="https://">https://</option>'+
-                                '<option value="mailto:">mailto:</option>'+
-                                '<option value="tel:">tel:</option>'+
-                            '</select>'+
                         '</div>'+
                         '<input class="note-image-attributes-url form-control" type="text" name="url">'+
                     '</div>'+
@@ -111,7 +96,7 @@
                     '</div>'+
                 '</div>';
 
-                this.$dialog=ui.dialog({
+                this.$dialog = ui.dialog({
                     title:'Image Attributes',
                     body:body,
                     footer:'<button href="#" class="btn btn-primary note-image-attributes-btn">OK</button>'
@@ -135,16 +120,17 @@
 
                 var $img=$($editable.data('target'));
 
-                var imgInfo={
-                    imgDom:$img,
-                    title:$img.attr('title'),
-                    alt:$img.attr('alt'),
-                    class:$img.attr('class'),
-                    style:$img.attr('style')
+                var imgInfo = {
+                    imgDom : $img,
+                    title : $img.attr('title'),
+                    alt : $img.attr('alt'),
+                    class : $img.attr('class'),
+                    style : $img.attr('style'),
+                    imgLink : $($img.context).parent().is( "a" ) ? $($img.context).parent() : null,
                 };
 
                 this.showLinkDialog(imgInfo)
-                    .then(function(imgInfo){
+                    .then(function(imgInfo){ // Save...
 
                         ui.hideDialog(self.$dialog);
 
@@ -183,11 +169,13 @@
                         }
 
                         // Link
-                        if ( $img.parent().is( "a" )) {
+                        if ($img.parent().is( "a" )) {
                             $img.unwrap();
                         }
 
-                        if(imgInfo.url) {
+                        var urlRegex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi);
+
+                        if (imgInfo.url.match(urlRegex)) {
                             $img.wrap('<a href="' + imgInfo.url + '" target="' + imgInfo.target + '"></a>');
                         }
 
@@ -197,21 +185,32 @@
             };
 
             this.showLinkDialog = function(imgInfo){
+
                 return $.Deferred(function(deferred){
 
-                    var $imageTitle=self.$dialog.find('.note-image-attributes-title');
-                    var $imageAlt=self.$dialog.find('.note-image-attributes-alt');
-                    var $imageClass=self.$dialog.find('.note-image-attributes-class');
-                    var $imageStyle=self.$dialog.find('.note-image-attributes-style');
-                    var $linkUrlType=self.$dialog.find('.note-image-attributes-type');
-                    var $linkUrl=self.$dialog.find('.note-image-attributes-url');
-                    var $linkTarget=self.$dialog.find('.note-image-attributes-target-select');
-                    var $editBtn=self.$dialog.find('.note-image-attributes-btn');
+                    var $imageTitle = self.$dialog.find('.note-image-attributes-title');
+                    var $imageAlt = self.$dialog.find('.note-image-attributes-alt');
+                    var $imageClass = self.$dialog.find('.note-image-attributes-class');
+                    var $imageStyle = self.$dialog.find('.note-image-attributes-style');
+                    var $linkUrl = self.$dialog.find('.note-image-attributes-url');
+                    var $linkTarget = self.$dialog.find('.note-image-attributes-target-select');
+                    var $editBtn = self.$dialog.find('.note-image-attributes-btn');
 
-                    ui.onDialogShown(self.$dialog,function(){
+                    $linkUrl.val( imgInfo.imgLink.attr('href') );
+
+                    $linkTarget.find('option').each(function(i, obj){
+                        if($(this).val() == imgInfo.imgLink.attr('target')) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+
+                    ui.onDialogShown(self.$dialog, function(){
                         context.triggerEvent('dialog.shown');
-                        $editBtn.click(function(event){
-                            event.preventDefault();
+
+                        $editBtn.click(function(e){
+
+                            e.preventDefault();
+
                             deferred.resolve({
                                 imgDom:imgInfo.imgDom,
                                 alt:$imageAlt.val(),
@@ -222,6 +221,7 @@
                                 target:$linkTarget.val()
                             });
                         });
+
                         $imageTitle.on('keyup paste',function(){
                             var url=$imageTitle.val();
                         }).val(imgInfo.title).trigger('focus');
@@ -234,6 +234,7 @@
                         $imageStyle.on('keyup paste',function(){
                             var url=$imageStyle.val();
                         }).val(imgInfo.style).trigger('focus');
+
                         self.bindEnterKey($imageTitle,$imageAlt,$imageClass,$imageStyle,$editBtn);
                     });
 
@@ -243,6 +244,7 @@
                         $imageClass.off('keyup paste keypress');
                         $imageStyle.off('keyup paste keypress');
                         $editBtn.off('click');
+
                         if(deferred.state()==='pending'){
                             deferred.reject();
                         }
