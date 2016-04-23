@@ -153,8 +153,8 @@
                 this.$dialog.remove();
             };
             this.bindEnterKey=function($input,$btn){
-                $input.on('keypress',function(e){
-                    if(e.keyCode===13){
+                $input.on('keypress',function(event){
+                    if(event.keyCode===13){
                         $btn.trigger('click');
                     }
                 });
@@ -232,18 +232,20 @@
                         $linkClass=self.$dialog.find('.note-image-attributes-link-class'),
                         $linkRel=self.$dialog.find('.note-image-attributes-link-rel'),
                         $editBtn=self.$dialog.find('.note-image-attributes-btn');
-                    $linkHref.val(imgInfo.imgLink.attr('href'));
-                    $linkClass.val(imgInfo.imgLink.attr('class'));
-                    $linkTarget.find('option').each(function(){
-                        if($(this).val()==imgInfo.imgLink.attr('target')){
-                            $(this).attr('selected','selected');
-                        }
-                    });
-                    $linkRel.find('option').each(function(){
-                        if($(this).val()==imgInfo.imgLink.attr('rel')){
-                            $(this).attr('selected','selected');
-                        }
-                    });
+                    if(imgInfo.imgLink){
+                        $linkHref.val(imgInfo.imgLink.attr('href'));
+                        $linkClass.val(imgInfo.imgLink.attr('class'));
+                        $linkTarget.find('option').each(function(){
+                            if($(this).val()==imgInfo.imgLink.attr('target')){
+                                $(this).attr('selected','selected');
+                            }
+                        });
+                        $linkRel.find('option').each(function(){
+                            if($(this).val()==imgInfo.imgLink.attr('rel')){
+                                $(this).attr('selected','selected');
+                            }
+                        });
+                    }
                     ui.onDialogShown(self.$dialog,function(){
                         context.triggerEvent('dialog.shown');
                         $editBtn.click(function(e){
