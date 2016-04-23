@@ -7,8 +7,6 @@ Adds a button to the image popover to edit title, alt, class and style attribute
 
 ![summernote-image-attributes-modal](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-dialog.png)
 
-Thanks to [minidc](https://github.com/ninidc) links can now be added to images, BUT, the plugin isn't currently retreiving the link data to be displayed/edited in the modal.
-
 ### Installation
 
 #### 1. Include JS
@@ -38,8 +36,9 @@ $(document).ready(function() {
                 ['remove', ['removeMedia']]
             ],
         },
+        lang: 'en-US',
         imageAttributes:{
-            icon:'<i class="fa fa-pencil"/>',
+            icon:'<i class="note-icon-edit"/>', // This Icon is from the LibreICONS class Extras and SVG Icons for Summernote.
             removeEmpty:false // true = remove attributes | false = leave empty if present
         }
     });
