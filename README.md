@@ -42,7 +42,7 @@ $(document).ready(function() {
         imageAttributes:{
             icon:'<i class="note-icon-pencil"/>',
             removeEmpty:false // true = remove attributes | false = leave empty if present
-        }
+        },
         imageShape: {
             icon: '<i class="note-icon-picture"/>'
         }
