@@ -33,13 +33,41 @@
                 relPrefetch:'PreFetch: Specifies that the target document should be cached',
                 relPrev:'Prev: The previous document in a selection',
                 relSearch:'Search: Links to a search tool for the document',
-                relTag:'Tag: A tag (Keyword) for the current documentNext'
+                relTag:'Tag: A tag (Keyword) for the current document'
+            }
+        },
+        'es-ES':{
+            imageAttributes:{
+                tooltip:'Propiedades de la Imagen',
+                pluginImageTitle:'Atributos de la Imagen',
+                pluginLinkTitle:'Atributos del Enlace',
+                title:'Titulo',
+                alt:'Alternativo',
+                class:'Clases',
+                style:'Estilo',
+                href:'URL',
+                target:'Destino',
+                linkClass:'Clase',
+                rel:'Rel',
+                relBlank:'No usar atributo Rel',
+                relAlternate:'Alternate: Enlaza a una versión alternativa del documento',
+                relAuthor:'Author: Enlaza al autor del documento',
+                relBookmark:'Bookmark: URL permanente utilizada para enlazar',
+                relHelp:'Help: Enlaza a un documento de Ayuda',
+                relLicense:'License: Enlaza a un documento de información de Copyright',
+                relNext:'Next: Enlaza al siguiente documento en una selección',
+                relNofollow:'NoFollow: Enlaza a un documento no confirmado, como un enlace de pago, también evita que los buscadores sigan este enlace',
+                relNoreferrer:'NoReferrer: Specifies that the browser should not send a HTTP Header',
+                relPrefetch:'PreFetch: Specifies that the target document should be cached',
+                relPrev:'Prev: Enlaza al documento anterior en una selección',
+                relSearch:'Search: Enlaza a una herramienta de búsqueda para el documento',
+                relTag:'Tag: Un etiqueta (palabra clave) para el documento actual'
             }
         }
     });
     $.extend($.summernote.options,{
         imageAttributes:{
-            icon:'<i class="note-icon-edit"/>', // This Icon is from the LibreICONS class Extras and SVG Icons for Summernote.
+            icon:'<i class="note-icon-pencil"/>',
             removeEmpty:true
         }
     })
@@ -82,7 +110,7 @@
                     '<div class="input-group col-xs-10">'+
                         '<input type="text" class="note-image-attributes-class form-control">'+
                         '<div class="input-group-btn">'+
-                            '<select class="note-image-attributes-class-select btn btn-default" onchange="$(\'.note-image-attributes-class\').val($(\'.note-image-attributes-class\').val()+\' \'+$(this).val());">'+
+                            '<select class="note-image-attributes-class-select btn btn-default">'+
                                 '<option value="">Select Class</option>'+
                                 '<option value="img-responsive">Responsive</option>'+
                                 '<option value="img-rounded">Rounded</option>'+
@@ -158,6 +186,22 @@
                         $btn.trigger('click');
                     }
                 });
+            };
+            this.bindLabels=function(){
+            	self.$dialog.find('label').on('click', function() {
+            		$(this).parent().find('.form-control:first').focus();
+            	});
+            };
+            this.bindClassesSelector=function(){
+            	$('.note-image-attributes-class-select').on('change', function() {
+					$('.note-image-attributes-class').val(
+						$.unique( /* Ensure no duplicate classes */
+							$.trim( $('.note-image-attributes-class').val() + ' ' + $(this).val() ) /* Concat and trim */
+							.replace(/ +(?= )/g,'') /* Remove multiple spaces */
+							.split(' ')
+							).join(' ')
+					)
+            	});
             };
             this.show=function(){
                 var $img=$($editable.data('target'));
@@ -269,6 +313,8 @@
                         self.bindEnterKey(
                             $editBtn
                         );
+                        self.bindLabels();
+                        self.bindClassesSelector();
                     });
                     ui.onDialogHidden(self.$dialog,function(){
                         $editBtn.off('click');

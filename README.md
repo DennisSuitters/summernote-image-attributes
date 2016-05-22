@@ -19,7 +19,7 @@ Include the following code after Summernote:
 
 #### 2. Supported languages
 
-Currently available in English!
+Currently available in English and Spanish!
 
 #### 3. Summernote options
 
@@ -38,7 +38,7 @@ $(document).ready(function() {
         },
         lang: 'en-US',
         imageAttributes:{
-            icon:'<i class="note-icon-edit"/>', // This Icon is from the LibreICONS class Extras and SVG Icons for Summernote.
+            icon:'<i class="note-icon-pencil"/>', // This Icon is from the LibreICONS class Extras and SVG Icons for Summernote.
             removeEmpty:false // true = remove attributes | false = leave empty if present
         }
     });
