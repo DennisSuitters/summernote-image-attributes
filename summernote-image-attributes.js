@@ -11,6 +11,8 @@
         'en-US':{
             imageAttributes:{
                 tooltip:'Image Attributes',
+                tooltipShape:'Image Shape',
+                tooltipShapeOptions: [ 'Rounded', 'Circle', 'Thumbnail', 'None' ],
                 pluginImageTitle:'Image Attributes',
                 pluginLinkTitle:'Link Attributes',
                 title:'Title',
@@ -39,6 +41,8 @@
         'es-ES':{
             imageAttributes:{
                 tooltip:'Propiedades de la Imagen',
+                tooltipShape:'Forma de la Imagen',
+                tooltipShapeOptions: [ 'Borde Redondeado', 'Formato Circular', 'Marco de foto', 'Normal' ],
                 pluginImageTitle:'Atributos de la Imagen',
                 pluginLinkTitle:'Atributos del Enlace',
                 title:'Titulo',
@@ -66,9 +70,12 @@
         }
     });
     $.extend($.summernote.options,{
-        imageAttributes:{
-            icon:'<i class="note-icon-pencil"/>',
+        imageAttributes: {
+            icon: '<i class="note-icon-pencil"/>',
             removeEmpty:true
+        },
+        imageShape: {
+            icon: '<i class="note-icon-picture"/>'
         }
     })
     $.extend($.summernote.plugins,{
@@ -130,13 +137,13 @@
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.href+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<input type="text" class="note-image-attributes-href form-control" name="href">'+
+                        '<input type="text" class="note-image-attributes-href form-control">'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.target+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<select class="note-image-attributes-target form-control" name="target">'+
+                        '<select class="note-image-attributes-target form-control">'+
                             '<option value="_self">Self</option>'+
                             '<option value="_blank">Blank</option>'+
                             '<option value="_top">Top</option>'+
@@ -147,13 +154,13 @@
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.linkClass+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<input type="text" class="note-image-attributes-link-class form-control" name="linkClass">'+
+                        '<input type="text" class="note-image-attributes-link-class form-control">'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.rel+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<select class="note-image-attributes-link-rel form-control" name="linkRel">'+
+                        '<select class="note-image-attributes-link-rel form-control">'+
                             '<option value="">'+lang.imageAttributes.relBlank+'</option>'+
                             '<option value="alternate">'+lang.imageAttributes.relAlternate+'</option>'+
                             '<option value="author">'+lang.imageAttributes.relAuthor+'</option>'+
@@ -256,7 +263,7 @@
                             lnktxt+=' href="'+imgInfo.href+'"';
                             lnktxt+=' target="'+imgInfo.target+'"';
                             if(imgInfo.linkRel){
-                                lnktxt+=' ref="'+imgInfo.linkRel+'"';
+                                lnktxt+=' rel="'+imgInfo.linkRel+'"';
                             }
                             lnktxt+='></a>';
                             $img.wrap(lnktxt);
@@ -325,6 +332,42 @@
                     ui.showDialog(self.$dialog);
                 });
             };
+        },
+        'imageShape':function(context){
+            var ui=$.summernote.ui;
+            var $editable=context.layoutInfo.editable;
+            var $note=context.layoutInfo.note;
+            var options=context.options;
+            var lang=options.langInfo;
+            /* Must keep the same order as in lang.imageAttributes.tooltipShapeOptions */
+            var shapes = [ 'img-rounded', 'img-circle', 'img-thumbnail', '' ];
+            context.memo('button.imageShape',function(){
+            	var button = ui.buttonGroup([
+            		ui.button({
+            			className: 'dropdown-toggle',
+            			contents: options.imageShape.icon + ' <span class="caret"></span>',
+            			tooltip: lang.imageAttributes.tooltipShape,
+            			data: {
+            				toggle: 'dropdown'
+            			}
+            		}),
+            		ui.dropdown({
+            			className: 'dropdown-shape',
+            			items: lang.imageAttributes.tooltipShapeOptions,
+            			click: function (event) {
+            					var $button = $(event.target);
+            					var $img=$($editable.data('target'));
+            					var index = $.inArray( $button.data('value'), lang.imageAttributes.tooltipShapeOptions );
+            					/* Options are mutually exclusive, so we just remove the others before adding */
+            					$.each( shapes, function( index, value ) { $img.removeClass(value); });
+            					$img.addClass( shapes[index] );
+
+            					context.invoke('editor.afterCommand');
+            				}
+            		})
+            	]);
+                return button.render();
+            });
         }
     });
 }));
