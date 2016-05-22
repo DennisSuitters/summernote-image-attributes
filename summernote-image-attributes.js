@@ -11,11 +11,14 @@
         'en-US':{
             imageAttributes:{
                 tooltip:'Image Attributes',
+                tooltipShape:'Image Shape',
+                tooltipShapeOptions: [ 'Rounded', 'Circle', 'Thumbnail', 'None' ],
                 pluginImageTitle:'Image Attributes',
                 pluginLinkTitle:'Link Attributes',
                 title:'Title',
                 alt:'Alt',
                 class:'Class',
+                classSelect:'Select Class',
                 style:'Style',
                 href:'URL',
                 target:'Target',
@@ -39,11 +42,14 @@
         'es-ES':{
             imageAttributes:{
                 tooltip:'Propiedades de la Imagen',
+                tooltipShape:'Forma de la Imagen',
+                tooltipShapeOptions: [ 'Borde Redondeado', 'Formato Circular', 'Marco de foto', 'Normal' ],
                 pluginImageTitle:'Atributos de la Imagen',
                 pluginLinkTitle:'Atributos del Enlace',
                 title:'Titulo',
                 alt:'Alternativo',
                 class:'Clases',
+                classSelect:'Selecciona Forma',
                 style:'Estilo',
                 href:'URL',
                 target:'Destino',
@@ -66,9 +72,14 @@
         }
     });
     $.extend($.summernote.options,{
-        imageAttributes:{
-            icon:'<i class="note-icon-pencil"/>',
+        imageAttributes: {
+            icon: '<i class="note-icon-pencil"/>',
             removeEmpty:true
+        },
+        imageShape: {
+            icon: '<i class="note-icon-picture"/>',
+            /* Must keep the same order as in lang.imageAttributes.tooltipShapeOptions */
+            shapes: [ 'img-rounded', 'img-circle', 'img-thumbnail', '' ]
         }
     })
     $.extend($.summernote.plugins,{
@@ -92,6 +103,10 @@
             });
             this.initialize=function(){
                 var $container=options.dialogsInBody?$(document.body):$editor;
+                var $shapesOptions = '';
+                $.each( options.imageShape.shapes, function( index, value ) {
+                	if(value) $shapesOptions = $shapesOptions + '<option value="' + value + '">' + lang.imageAttributes.tooltipShapeOptions[index] + '</option>'
+                });
                 var body='<h5>'+lang.imageAttributes.pluginImageTitle+'</h5>'+
                         '<div class="form-group">'+
                             '<label class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
@@ -111,11 +126,8 @@
                         '<input type="text" class="note-image-attributes-class form-control">'+
                         '<div class="input-group-btn">'+
                             '<select class="note-image-attributes-class-select btn btn-default">'+
-                                '<option value="">Select Class</option>'+
-                                '<option value="img-responsive">Responsive</option>'+
-                                '<option value="img-rounded">Rounded</option>'+
-                                '<option value="img-circle">Circle</option>'+
-                                '<option value="img-thumbnail">Thumbnail</option>'+
+                                '<option value="">' + lang.imageAttributes.classSelect + '</option>'+
+                                $shapesOptions+
                             '</select>'+
                         '</div>'+
                     '</div>'+
@@ -130,13 +142,13 @@
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.href+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<input type="text" class="note-image-attributes-href form-control" name="href">'+
+                        '<input type="text" class="note-image-attributes-href form-control">'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.target+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<select class="note-image-attributes-target form-control" name="target">'+
+                        '<select class="note-image-attributes-target form-control">'+
                             '<option value="_self">Self</option>'+
                             '<option value="_blank">Blank</option>'+
                             '<option value="_top">Top</option>'+
@@ -147,13 +159,13 @@
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.linkClass+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<input type="text" class="note-image-attributes-link-class form-control" name="linkClass">'+
+                        '<input type="text" class="note-image-attributes-link-class form-control">'+
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
                     '<label class="control-label col-xs-2">'+lang.imageAttributes.rel+'</label>'+
                     '<div class="input-group col-xs-10">'+
-                        '<select class="note-image-attributes-link-rel form-control" name="linkRel">'+
+                        '<select class="note-image-attributes-link-rel form-control">'+
                             '<option value="">'+lang.imageAttributes.relBlank+'</option>'+
                             '<option value="alternate">'+lang.imageAttributes.relAlternate+'</option>'+
                             '<option value="author">'+lang.imageAttributes.relAuthor+'</option>'+
@@ -188,12 +200,17 @@
                 });
             };
             this.bindLabels=function(){
+            	self.$dialog.find('.form-control:first').focus().select();
             	self.$dialog.find('label').on('click', function() {
             		$(this).parent().find('.form-control:first').focus();
             	});
             };
             this.bindClassesSelector=function(){
             	$('.note-image-attributes-class-select').on('change', function() {
+					/* Options are mutually exclusive, so we just remove the others before adding */
+					$.each( options.imageShape.shapes, function( index, value ) {
+						$('.note-image-attributes-class').val( $('.note-image-attributes-class').val().replace(value, "") );
+					});
 					$('.note-image-attributes-class').val(
 						$.unique( /* Ensure no duplicate classes */
 							$.trim( $('.note-image-attributes-class').val() + ' ' + $(this).val() ) /* Concat and trim */
@@ -256,7 +273,7 @@
                             lnktxt+=' href="'+imgInfo.href+'"';
                             lnktxt+=' target="'+imgInfo.target+'"';
                             if(imgInfo.linkRel){
-                                lnktxt+=' ref="'+imgInfo.linkRel+'"';
+                                lnktxt+=' rel="'+imgInfo.linkRel+'"';
                             }
                             lnktxt+='></a>';
                             $img.wrap(lnktxt);
@@ -325,6 +342,39 @@
                     ui.showDialog(self.$dialog);
                 });
             };
+        },
+        'imageShape':function(context){
+            var ui=$.summernote.ui;
+            var $editable=context.layoutInfo.editable;
+            var $note=context.layoutInfo.note;
+            var options=context.options;
+            var lang=options.langInfo;
+            context.memo('button.imageShape',function(){
+            	var button = ui.buttonGroup([
+            		ui.button({
+            			className: 'dropdown-toggle',
+            			contents: options.imageShape.icon + ' <span class="caret"></span>',
+            			tooltip: lang.imageAttributes.tooltipShape,
+            			data: {
+            				toggle: 'dropdown'
+            			}
+            		}),
+            		ui.dropdown({
+            			className: 'dropdown-shape',
+            			items: lang.imageAttributes.tooltipShapeOptions,
+            			click: function (event) {
+            					var $button = $(event.target);
+            					var $img=$($editable.data('target'));
+            					var index = $.inArray( $button.data('value'), lang.imageAttributes.tooltipShapeOptions );
+            					/* Options are mutually exclusive, so we just remove the others before adding */
+            					$.each( options.imageShape.shapes, function( index, value ) { $img.removeClass(value); });
+            					$img.addClass( options.imageShape.shapes[index] );
+            					context.invoke('editor.afterCommand');
+            				}
+            		})
+            	]);
+                return button.render();
+            });
         }
     });
 }));
