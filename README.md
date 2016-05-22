@@ -38,7 +38,7 @@ $(document).ready(function() {
         },
         lang: 'en-US',
         imageAttributes:{
-            icon:'<i class="note-icon-pencil"/>', // This Icon is from the LibreICONS class Extras and SVG Icons for Summernote.
+            icon:'<i class="note-icon-pencil"/>',
             removeEmpty:false // true = remove attributes | false = leave empty if present
         }
     });
@@ -48,3 +48,4 @@ $(document).ready(function() {
 ### Contributors
 - Add links to Image
   - Thank you to [minidc](https://github.com/ninidc)
+  - Thank you to [MarcosBL](https://github.com/MarcosBL)
