@@ -363,20 +363,14 @@
             			className: 'dropdown-shape',
             			items: lang.imageAttributes.tooltipShapeOptions,
             			click: function (event) {
-                        			event.preventDefault();
-        					var $button = $(event.target);
-        					var $img=$($editable.data('target'));
-        					var index = $.inArray(
-                                $button.data('value'),
-                                lang.imageAttributes.tooltipShapeOptions
-                            );
-        					/* Options are mutually exclusive, so we just remove the others before adding */
-        					$.each( options.imageShape.shapes, function( index, value ) {
-                                $img.removeClass(value);
-                            });
-        					$img.addClass( options.imageShape.shapes[index] );
-        					context.invoke('editor.afterCommand');
-            			}
+            					var $button = $(event.target);
+            					var $img=$($editable.data('target'));
+            					var index = $.inArray( $button.data('value'), lang.imageAttributes.tooltipShapeOptions );
+            					/* Options are mutually exclusive, so we just remove the others before adding */
+            					$.each( options.imageShape.shapes, function( index, value ) { $img.removeClass(value); });
+            					$img.addClass( options.imageShape.shapes[index] );
+            					context.invoke('editor.afterCommand');
+            				}
             		})
             	]);
                 return button.render();
