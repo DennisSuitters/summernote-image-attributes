@@ -1,9 +1,9 @@
 # summernote-image-attributes
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
-Adds a button to the image popover to edit title, alt, class and style attributes (imageAttributes plugin alias)
+Adds two buttons to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes (Thanks to [minidc](https://github.com/ninidc)).
 
-It can also optionally add a dropdown to choose from Bootstrap image shapes (imageShape plugin alias)
+It also optionally adds a dropdown to choose from Bootstrap image shapes (Thanks to [MarcosBL](https://github.com/MarcosBL)).
 
 ![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-popover.png)
 
