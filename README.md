@@ -38,7 +38,8 @@ $(document).ready(function() {
                 ['remove', ['removeMedia']]
             ],
         },
-        lang: 'en-US',
+        lang: 'en-US'
+/* Do NOT set the below options when Calling Summernote, we're working on why these are throwing an error that causes the plugin not to work.
         imageAttributes:{
             icon:'<i class="note-icon-pencil"/>',
             removeEmpty:false // true = remove attributes | false = leave empty if present
@@ -46,6 +47,7 @@ $(document).ready(function() {
         imageShape: {
             icon: '<i class="note-icon-picture"/>'
         }
+*/
     });
 });
 ```
