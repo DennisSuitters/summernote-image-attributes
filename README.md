@@ -21,7 +21,7 @@ Include the following code after Summernote:
 
 #### 2. Supported languages
 
-Currently available in English and Spanish!
+Currently available in English, Spanish and French!
 
 #### 3. Summernote options
 
@@ -56,3 +56,6 @@ $(document).ready(function() {
 - Add links to Image
   - Thank you to [minidc](https://github.com/ninidc)
   - Thank you to [MarcosBL](https://github.com/MarcosBL)
+- French Translation
+  - Thank you to [b-alidr](https://github.com/b-alidra)
+ 
