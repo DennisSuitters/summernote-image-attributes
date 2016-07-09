@@ -69,7 +69,38 @@
                 relSearch:'Search: Enlaza a una herramienta de búsqueda para el documento',
                 relTag:'Tag: Un etiqueta (palabra clave) para el documento actual'
             }
-        }
+        },
+        'fr-FR':{
+            imageAttributes:{
+                tooltip:'Attributs de l\'image',
+                tooltipShape:'Forme de l\'image',
+                tooltipShapeOptions: [ 'Arrondi', 'Cercle', 'Vignette', 'Aucune' ],
+                pluginImageTitle:'Attributs de l\'image',
+                pluginLinkTitle:'Attributs du lien',
+                title:'Titre',
+                alt:'Alt',
+                class:'Class CSS',
+                classSelect:'Choisir une Class',
+                style:'Style',
+                href:'URL',
+                target:'Cible',
+                linkClass:'Class CSS du lien',
+                rel:'Lien Rel',
+                relBlank:'Ne pas utiliser d\'attribut Rel',
+                relAlternate:'Alternate: Lien vers une autre version du document',
+                relAuthor:'Author: Lien vers l\'auteur du document',
+                relBookmark:'Bookmark: Lien permant utilisé pour les signets',
+                relHelp:'Help: Lien vers un document d\'aide',
+                relLicense:'License: Lien vers les informations de droits d\'auteur du document',
+                relNext:'Next: La page suivante de ce document',
+                relNofollow:'NoFollow: Empêcher les moteurs de recherche de suivre ce lien',
+                relNoreferrer:'NoReferrer: Précise que le navigateur ne doit pas envoyer d\'entête HTTP',
+                relPrefetch:'PreFetch: Précise que le document cible doit être mis en cache',
+                relPrev:'Prev: La page précédente de ce document',
+                relSearch:'Search: Lien vers un outil de recherche du document',
+                relTag:'Tag: Mot-clé du document'
+            }
+        },
     });
     $.extend($.summernote.options,{
         imageAttributes: {
