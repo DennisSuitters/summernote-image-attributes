@@ -21,7 +21,7 @@ Include the following code after Summernote:
 
 #### 2. Supported languages
 
-Currently available in English, Spanish and French!
+Currently available in English, Spanish, French and Chinese (Traditional)!
 
 #### 3. Summernote options
 
@@ -58,4 +58,5 @@ $(document).ready(function() {
   - Thank you to [MarcosBL](https://github.com/MarcosBL)
 - French Translation
   - Thank you to [b-alidr](https://github.com/b-alidra)
- 
+- Chinese (Traditional) Translation
+  - Thank you to [horkenw](https://github.com/horkenw)
