@@ -134,6 +134,39 @@
                 relTag:'標籤: 為該文件設定標籤(關鍵字)'
             }
         },
+		'zh-CN':{
+            imageAttributes:{
+                tooltip:'图片提示',
+                tooltipShape:'图片形状',
+                tooltipShapeOptions: [ '圆角', '圆形', '缩略图', '无' ],
+                pluginImageTitle:'图片属性',
+                pluginLinkTitle:'超链接属性',
+                title:'标题',
+                alt:'图片说明',
+                class:'Class',
+                classSelect:'选择 Class',
+                style:'Style',
+                href:'URL',
+                target:'模板',
+                linkClass:'超链接样式',
+                rel:'描述',
+                relBlank:'不使用连接样式',
+                rel:'不使用连接说明',
+                relBlank:'不使用连接说明',
+                relAlternate:'替代说明:连至替代说明文件',
+                relAuthor:'作者: 来源位置',
+                relBookmark:'书签: 提供加入书签',
+                relHelp:'帮助: 连接至帮助文件',
+                relLicense:'版权: 连接至版权宣告页面',
+                relNext:'下一步: 连接至下一个被选择的页面',
+                relNofollow:'不被追踪URL: 链接设置取消追踪选项, 例如付费页面, 并且禁止搜索引擎追踪该页面',
+                relNoreferrer:'NoReferrer: 指定發送時取消 HTTP 的開頭',
+                relPrefetch:'预存: 指定该页面启用预存浏览',
+                relPrev:'上一步: 上一个被选择的页面',
+                relSearch:'搜索: 链至搜索页面',
+                relTag:'标签: 为该文件设置标签(关键字)'
+            }
+        },
     });
     $.extend($.summernote.options,{
         imageAttributes: {
