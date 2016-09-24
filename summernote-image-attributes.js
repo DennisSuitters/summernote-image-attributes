@@ -134,6 +134,38 @@
                 relTag:'標籤: 為該文件設定標籤(關鍵字)'
             }
         },
+        'it-IT':{
+            imageAttributes:{
+                tooltip:'Attributi Immagine',
+                tooltipShape:'Forma Immagine',
+                tooltipShapeOptions: [ 'Arrotondata', 'Circolare', 'Con cornice', 'Nessuna' ],
+                pluginImageTitle:'Attributi Immagine',
+                pluginLinkTitle:'Attributi Collegamento',
+                title:'Title',
+                alt:'Alt',
+                class:'Class',
+                classSelect:'Seleziona Classe',
+                style:'Style',
+                href:'URL',
+                target:'Target',
+                linkClass:'Classe per il Link',
+                rel:'Link Rel',
+                relBlank:'Non usare attributo Rel',
+                relAlternate:'Alternate: Collegamento ad una versione alternativa del documento',
+                relAuthor:'Author: Collegamento all\'autore del documento',
+                relBookmark:'Bookmark: URL permanente per i preferiti',
+                relHelp:'Help: Collegamento ad una pagina di aiuto per questo documento',
+                relLicense:'License: Collegamento alle informazioni sul copyright di questo docuemnto',
+                relNext:'Next: Pagina successiva di questo documento',
+                relNofollow:'NoFollow: Impedisce ai motori di ricerca di seguire questo collegamento',
+                relNoreferrer:'NoReferrer: Specifica al browser di non inviare Header HTTP',
+                relPrefetch:'PreFetch: Specifica che il documento di destinazione deve essere memorizzato nella cache',
+                relPrev:'Prev: Pagina precedente di questo documento',
+                relSearch:'Search: Collegamenti a uno strumento di ricerca per questo documento',
+                relTag:'Tag: Un tag (parola chiave) per questo documento'
+            }
+        },
+
     });
     $.extend($.summernote.options,{
         imageAttributes: {
