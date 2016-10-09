@@ -1,7 +1,7 @@
 # summernote-image-attributes
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
-Adds two buttons to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes (Thanks to [minidc](https://github.com/ninidc)).
+Adds two buttons to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes (Thanks to [minidc](https://github.com/ninidc)). Now includes role attribute editing.
 
 It also optionally adds a dropdown to choose from Bootstrap image shapes (Thanks to [MarcosBL](https://github.com/MarcosBL)).
 
@@ -21,7 +21,7 @@ Include the following code after Summernote:
 
 #### 2. Supported languages
 
-Currently available in English, Spanish, French, Chinese (Traditional), and Italian!
+Currently available in English, Spanish, French, Chinese (Traditional), Italian and German!
 
 #### 3. Summernote options
 
@@ -39,8 +39,9 @@ $(document).ready(function() {
             ],
         },
         lang: 'en-US'
-/* Do NOT set the below options when Calling Summernote, we're working on why these are throwing an error that causes the plugin not to work.
+/* Do NOT set the below options when Calling Summernote, we're working on why these are throwing an error that causes the plugin not to work. You can however set them in the script itself.
         imageAttributes:{
+            imageDialogLayout:'default', // default|horizontal
             icon:'<i class="note-icon-pencil"/>',
             removeEmpty:false // true = remove attributes | false = leave empty if present
         },
@@ -62,3 +63,5 @@ $(document).ready(function() {
   - Thank you to [horkenw](https://github.com/horkenw)
 - Italian Translation
   - Thank you to [paolodadda](https://github.com/paolodadda)
+- German Translation and Horizontal Dialog Layout
+  - Thank you to [YaWK](https://github.com/YaWK)
