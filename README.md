@@ -21,7 +21,7 @@ Include the following code after Summernote:
 
 #### 2. Supported languages
 
-Currently available in English, Spanish, French, Chinese (Traditional), Italian and German!
+Currently available in English, Spanish, French, Chinese (Traditional), Italian, German and Turkish!
 
 #### 3. Summernote options
 
@@ -65,3 +65,5 @@ $(document).ready(function() {
   - Thank you to [paolodadda](https://github.com/paolodadda)
 - German Translation and Horizontal Dialog Layout
   - Thank you to [YaWK](https://github.com/YaWK)
+- Turkish Translation
+  - Thank you to [GoktugOzturk](https://github.com/GoktugOzturk)
