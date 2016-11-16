@@ -115,7 +115,7 @@
                 dialogTitle:'圖片提示',
                 tooltip:'圖片提示',
                 tooltipShape:'圖片形狀',
-                tooltipShapeOptions: [ '圓角', '圓形', '縮圖', '無' ],
+                tooltipShapeOptions: ['響應式', '圓角', '圓形', '縮圖', '無'],
                 pluginImageTitle:'圖片屬性',
                 pluginLinkTitle:'連結屬性',
                 title:'標題',
