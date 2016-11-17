@@ -597,7 +597,7 @@
                             .on('change', function () {
                             var callbacks = options.callbacks;
                             // If onImageUpload options setted
-                            if (options.onImageUpload) {
+                            if (callbacks.onImageUpload) {
                                 context.triggerEvent('image.upload', this.files[0]);
                             // else change Image as dataURL
                             } else {
