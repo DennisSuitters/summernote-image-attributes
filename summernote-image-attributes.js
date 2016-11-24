@@ -7,18 +7,18 @@
         factory(window.jQuery);
     }
 }(function($){
-    var readFileAsDataURL = function (file) {
-      return $.Deferred(function (deferred) {
-        $.extend(new FileReader(), {
-          onload: function (e) {
-            var sDataURL = e.target.result;
-            deferred.resolve(sDataURL);
-          },
-          onerror: function () {
-            deferred.reject(this);
-          }
-        }).readAsDataURL(file);
-      }).promise();
+    var readFileAsDataURL=function(file){
+        return $.Deferred(function(deferred){
+            $.extend(new FileReader(),{
+                onload:function(e){
+                    var sDataURL=e.target.result;
+                    deferred.resolve(sDataURL);
+                },
+                onerror:function(){
+                    deferred.reject(this);
+                }
+            }).readAsDataURL(file);
+        }).promise();
     };
     $.extend(true,$.summernote.lang,{
         'en-US':{ /* English */
@@ -30,7 +30,8 @@
                 pluginImageTitle:'Image Attributes',
                 pluginLinkTitle:'Link Attributes',
                 title:'Title',
-                src: 'Source',
+                src:'Source',
+                srcHelp:'Selecting an image will replace existing image with an Inlined Image.',
                 alt:'Alt',
                 class:'Class',
                 classSelect:'Select Class',
@@ -38,9 +39,9 @@
                 role:'Role',
                 href:'URL',
                 target:'Target',
-                linkClass:'Link Class',
+                linkClass:'Class',
                 linkRole:'Role',
-                rel:'Link Rel',
+                rel:'Rel',
                 relBlank:'Do not use Rel Attribute',
                 relAlternate:'Alternate: Links to an alternate version of the document',
                 relAuthor:'Author: Links to the Author of the Document',
@@ -65,6 +66,8 @@
                 pluginImageTitle:'Atributos de la Imagen',
                 pluginLinkTitle:'Atributos del Enlace',
                 title:'Titulo',
+                src:'Fuente',
+                srcHelp:'La selección de una imagen reemplazará la imagen existente con una imagen Inline.',
                 alt:'Alternativo',
                 class:'Clases',
                 classSelect:'Selecciona Forma',
@@ -99,6 +102,8 @@
                 pluginImageTitle:'Attributs de l\'image',
                 pluginLinkTitle:'Attributs du lien',
                 title:'Titre',
+                src:'La source',
+                srcHelp:'La sélection d\'une image remplacera l\'image existante par une Image Inline.',
                 alt:'Alt',
                 class:'Class CSS',
                 classSelect:'Choisir une Class',
@@ -133,6 +138,8 @@
                 pluginImageTitle:'圖片屬性',
                 pluginLinkTitle:'連結屬性',
                 title:'標題',
+                src:'資源',
+                srcHelp:'選擇圖像將用內聯圖像替換現有圖像.',
                 alt:'圖片說明',
                 class:'类',
                 classSelect:'選擇 类',
@@ -169,6 +176,8 @@
                 pluginImageTitle:'Attributi Immagine',
                 pluginLinkTitle:'Attributi Collegamento',
                 title:'Titolo',
+                src:'Fonte',
+                srcHelp:'elezione di un\'immagine sostituirà immagine esistente con un inline Immagine.',
                 alt:'Alt',
                 class:'Classe',
                 classSelect:'Seleziona Classe',
@@ -203,6 +212,8 @@
                 pluginImageTitle:'Bild Eigenschaften',
                 pluginLinkTitle:'Link Eigenschaften',
                 title:'Titel',
+                src:'Quelle',
+                srcHelp:'Wenn Sie ein Bild auswählen, wird das bestehende Bild durch ein Inlined Image ersetzt.',
                 alt:'Alt Tag',
                 class:'CSS Klasse',
                 classSelect:'w&auml;hle CSS Klasse',
@@ -237,6 +248,8 @@
                 pluginImageTitle:'Resim Özellikleri',
                 pluginLinkTitle:'Bağlantı Özellikleri',
                 title:'Başlık',
+                src:'Kaynak',
+                srcHelp:'Bir görüntüyü seçmek, var olan resmi Inlined Image ile değiştirecektir.',
                 alt:'Alt. Metin',
                 class:'Sınıf',
                 classSelect:'Sınıf Seçin',
@@ -284,12 +297,11 @@
             var $editable=context.layoutInfo.editable;
             var options=context.options;
             var lang=options.langInfo;
-            var imageLimitation = '';
-            if (options.maximumImageFileSize) {
-                var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
-                var readableSize = (options.maximumImageFileSize / Math.pow(1024, unit)).toFixed(2) * 1 +
-                                   ' ' + ' KMGTP'[unit] + 'B';
-                imageLimitation = '<small>' + lang.image.maximumFileSize + ' : ' + readableSize + '</small>';
+            var imageLimitation='';
+            if(options.maximumImageFileSize){
+                var unit=Math.floor(Math.log(options.maximumImageFileSize)/Math.log(1024));
+                var readableSize=(options.maximumImageFileSize/Math.pow(1024,unit)).toFixed(2)*1+' '+' KMGTP'[unit]+'B';
+                imageLimitation='<small>'+lang.image.maximumFileSize+' : '+readableSize+'</small>';
             }
             context.memo('button.imageAttributes',function(){
                 var button=ui.button({
@@ -315,6 +327,8 @@
                             '<dd><input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control"></dd>'+
                             '<dt><label for="note-group-select-from-files"></label></dt>'+
                             '<dd><input type="file" id="note-group-select-from-files" name="file" accept="image/*" class="note-image-input form-control">'+imageLimitation+'</dd>'+
+                            '<dt></dt>'+
+                            '<dd><small class="help-block">'+lang.imageAttributes.srcHelp+'</small></dd>'+
                             '<dt><label for="note-image-attributes-alt">'+lang.imageAttributes.alt+'</label></dt>'+
                             '<dd><input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control"></dd>'+
                             '<dt><label for="note-image-attributes-class">'+lang.imageAttributes.class+'</label></dt>'+
@@ -375,13 +389,13 @@
                                 '<input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control">'+
                                 '</div>'+
                             '</div>'+
-                            '<div class="form-group note-group-select-from-files">' +
-                                '<label class="control-label col-xs-2"></label>' +
+                            '<div class="form-group note-group-select-from-files">'+
+                                '<label class="control-label col-xs-2"></label>'+
                                 '<div class="input-group col-xs-10">'+
-                                '<input class="note-image-input form-control" type="file" name="file" accept="image/*" />' +
-                                imageLimitation +
+                                '<input class="note-image-input form-control" type="file" name="file" accept="image/*" />'+imageLimitation+
+                                '<small class="help-block">'+lang.imageAttributes.srcHelp+'</small>'+
                                 '</div>'+
-                            '</div>' +
+                            '</div>'+
                             '<div class="form-group">'+
                                 '<label for="note-image-attributes-alt" class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
                                 '<div class="input-group col-xs-10">'+
@@ -592,22 +606,19 @@
                     }
                     ui.onDialogShown(self.$dialog,function(){
                         context.triggerEvent('dialog.shown');
-                        // Cloning imageInput to clear element.
                         $imageInput.replaceWith($imageInput.clone()
-                            .on('change', function () {
-                            var callbacks = options.callbacks;
-                            // If onImageUpload options setted
-                            if (callbacks.onImageUpload) {
-                                context.triggerEvent('image.upload', this.files[0]);
-                            // else change Image as dataURL
-                            } else {
-                                readFileAsDataURL(this.files[0]).then(function (dataURL) {
-                                    $imageSrc.val(dataURL)
-                                }).fail(function () {
-                                    context.triggerEvent('image.upload.error');
-                                });
-                            }
-                        }).val('')
+                                   .on('change',function(){
+                                       var callbacks=options.callbacks;
+                                       if(callbacks.onImageUpload){
+                                           context.triggerEvent('image.upload',this.files[0]);
+                                       }else{
+                                           readFileAsDataURL(this.files[0]).then(function(dataURL){
+                                               $imageSrc.val(dataURL)
+                                           }).fail(function(){
+                                               context.triggerEvent('image.upload.error');
+                                           });
+                                       }
+                                   }).val('')
                         );
                         $editBtn.click(function(e){
                             e.preventDefault();
@@ -671,7 +682,6 @@
                                 $button.data('value'),
                                 lang.imageAttributes.tooltipShapeOptions
                             );
-        					/* Options are mutually exclusive, so we just remove the others before adding */
         					$.each(options.imageShape.shapes,function(index,value){
                                 $img.removeClass(value);
                             });
