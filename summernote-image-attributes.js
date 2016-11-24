@@ -7,6 +7,19 @@
         factory(window.jQuery);
     }
 }(function($){
+    var readFileAsDataURL = function (file) {
+      return $.Deferred(function (deferred) {
+        $.extend(new FileReader(), {
+          onload: function (e) {
+            var sDataURL = e.target.result;
+            deferred.resolve(sDataURL);
+          },
+          onerror: function () {
+            deferred.reject(this);
+          }
+        }).readAsDataURL(file);
+      }).promise();
+    };
     $.extend(true,$.summernote.lang,{
         'en-US':{ /* English */
             imageAttributes:{
@@ -17,6 +30,7 @@
                 pluginImageTitle:'Image Attributes',
                 pluginLinkTitle:'Link Attributes',
                 title:'Title',
+                src: 'Source',
                 alt:'Alt',
                 class:'Class',
                 classSelect:'Select Class',
@@ -270,6 +284,13 @@
             var $editable=context.layoutInfo.editable;
             var options=context.options;
             var lang=options.langInfo;
+            var imageLimitation = '';
+            if (options.maximumImageFileSize) {
+                var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
+                var readableSize = (options.maximumImageFileSize / Math.pow(1024, unit)).toFixed(2) * 1 +
+                                   ' ' + ' KMGTP'[unit] + 'B';
+                imageLimitation = '<small>' + lang.image.maximumFileSize + ' : ' + readableSize + '</small>';
+            }
             context.memo('button.imageAttributes',function(){
                 var button=ui.button({
                     contents:options.imageAttributes.icon,
@@ -290,6 +311,10 @@
                     var body='<dl class="dl-horizontal">'+
                             '<dt><label for="note-image-attributes-title">'+lang.imageAttributes.title+'</label></dt>'+
                             '<dd><input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control"></dd>'+
+                            '<dt><label for="note-image-attributes-src">'+lang.imageAttributes.src+'</label></dt>'+
+                            '<dd><input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control"></dd>'+
+                            '<dt><label for="note-group-select-from-files"></label></dt>'+
+                            '<dd><input type="file" id="note-group-select-from-files" name="file" accept="image/*" class="note-image-input form-control">'+imageLimitation+'</dd>'+
                             '<dt><label for="note-image-attributes-alt">'+lang.imageAttributes.alt+'</label></dt>'+
                             '<dd><input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control"></dd>'+
                             '<dt><label for="note-image-attributes-class">'+lang.imageAttributes.class+'</label></dt>'+
@@ -344,6 +369,19 @@
                                     '<input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control">'+
                                 '</div>'+
                             '</div>'+
+                            '<div class="form-group">'+
+                                '<label for="note-image-attributes-src" class="control-label col-xs-2">'+lang.imageAttributes.src+'</label>'+
+                                '<div class="input-group col-xs-10">'+
+                                '<input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control">'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="form-group note-group-select-from-files">' +
+                                '<label class="control-label col-xs-2"></label>' +
+                                '<div class="input-group col-xs-10">'+
+                                '<input class="note-image-input form-control" type="file" name="file" accept="image/*" />' +
+                                imageLimitation +
+                                '</div>'+
+                            '</div>' +
                             '<div class="form-group">'+
                                 '<label for="note-image-attributes-alt" class="control-label col-xs-2">'+lang.imageAttributes.alt+'</label>'+
                                 '<div class="input-group col-xs-10">'+
@@ -460,6 +498,7 @@
                 var imgInfo={
                     imgDom:$img,
                     title:$img.attr('title'),
+                    src:$img.attr('src'),
                     alt:$img.attr('alt'),
                     role:$img.attr('role'),
                     class:$img.attr('class'),
@@ -480,6 +519,11 @@
                                 $img.attr('title',imgInfo.title);
                             }else{
                                 $img.removeAttr('title');
+                            }
+                            if(imgInfo.src){
+                                $img.attr('src',imgInfo.src);
+                            }else{
+                                $img.attr('src', '#');
                             }
                             if(imgInfo.class){
                                 $img.attr('class',imgInfo.class);
@@ -523,6 +567,8 @@
             this.showLinkDialog=function(imgInfo){
                 return $.Deferred(function(deferred){
                     var $imageTitle=self.$dialog.find('.note-image-attributes-title'),
+                        $imageInput = self.$dialog.find('.note-image-input'),
+                        $imageSrc = self.$dialog.find('.note-image-attributes-src'),
                         $imageAlt=self.$dialog.find('.note-image-attributes-alt'),
                         $imageClass=self.$dialog.find('.note-image-attributes-class'),
                         $imageStyle=self.$dialog.find('.note-image-attributes-style'),
@@ -546,11 +592,29 @@
                     }
                     ui.onDialogShown(self.$dialog,function(){
                         context.triggerEvent('dialog.shown');
+                        // Cloning imageInput to clear element.
+                        $imageInput.replaceWith($imageInput.clone()
+                            .on('change', function () {
+                            var callbacks = options.callbacks;
+                            // If onImageUpload options setted
+                            if (callbacks.onImageUpload) {
+                                context.triggerEvent('image.upload', this.files[0]);
+                            // else change Image as dataURL
+                            } else {
+                                readFileAsDataURL(this.files[0]).then(function (dataURL) {
+                                    $imageSrc.val(dataURL)
+                                }).fail(function () {
+                                    context.triggerEvent('image.upload.error');
+                                });
+                            }
+                        }).val('')
+                        );
                         $editBtn.click(function(e){
                             e.preventDefault();
                             deferred.resolve({
                                 imgDom:imgInfo.imgDom,
                                 title:$imageTitle.val(),
+                                src: $imageSrc.val(),
                                 alt:$imageAlt.val(),
                                 class:$imageClass.val(),
                                 style:$imageStyle.val(),
@@ -563,6 +627,7 @@
                             });
                         });
                         $imageTitle.val(imgInfo.title).focus;
+                        $imageSrc.val(imgInfo.src)
                         $imageAlt.val(imgInfo.alt);
                         $imageClass.val(imgInfo.class);
                         $imageStyle.val(imgInfo.style);
