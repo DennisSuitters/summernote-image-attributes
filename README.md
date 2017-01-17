@@ -9,29 +9,24 @@ Optionally adds a button that will use the TITLE or ALT depending which is used,
 ````html
 <figure>
     <img src="image.jpg" title="uses this first" alt="uses this if title is empty">
-    <figcaption>caption used from title or alt if title is empty
+    <figcaption>caption used from title or alt if title is empty.</figcaption>
+</figure>
 ````
-
-![summernote-image-attributes-popover](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-popover.png)
-
-![summernote-image-attributes-modal](https://github.com/StudioJunkyard/summernote-image-attributes/blob/master/summernote-image-attributes-dialog.png)
 
 ### Installation
 
 #### 1. Include JS
 
-Include the following code after Summernote:
+Include the following code after including Summernote:
 
 ```html
 <script src="summernote-image-attributes.js"></script>
 ```
 
 #### 2. Supported languages
-
 Currently available in English, Spanish, French, Chinese (Traditional), Italian, German and Turkish!
 
 #### 3. Summernote options
-
 Finally, customize the Summernote image popover.
 
 ```javascript
@@ -39,9 +34,9 @@ $(document).ready(function() {
     $('#summernote').summernote({
         popover: {
             image: [
+                ['custom', ['imageAttributes', 'imageShape' 'imageCaptionIt']],
                 ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
                 ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                ['custom', ['imageAttributes', 'imageShape' 'imageCaptionIt']],
                 ['remove', ['removeMedia']]
             ],
         },
@@ -54,6 +49,9 @@ $(document).ready(function() {
         },
         imageShape: {
             icon: '<i class="note-icon-picture"/>'
+        }
+        imageCaptionIt: {
+            icon: '<i class="note-icon-magic"/>'
         }
 */
     });
