@@ -3,7 +3,7 @@ A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG
 
 Adds a button to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes (Thanks to [minidc](https://github.com/ninidc)).
 
-The Image Shapes, and CaptioIt addons have now been extracted to their own Plugins, you can get view them via the links further down this page.
+The Image Shapes, and CaptionIt addons have now been extracted to their own Plugins, you can get view them via the links further down this page.
 
 ### Installation
 
