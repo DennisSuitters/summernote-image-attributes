@@ -25,12 +25,8 @@
       imageAttributes:{
         dialogTitle:'Image Attributes',
         tooltip:'Image Attributes',
-        tooltipShape:'Image Shape',
-        tooltipShapeOptions:['Responsive','Rounded','Circle','Thumbnail','None'],
-        tooltipImageCaptionIt:'CaptionIt',
         pluginImageTitle:'Image Attributes',
         pluginLinkTitle:'Link Attributes',
-        pluginImageCaptionTitle:'CaptionIt',
         title:'Title',
         src:'Source',
         srcHelp:'Selecting an image will replace existing image with an Inlined Image.',
@@ -63,12 +59,8 @@
       imageAttributes:{
         dialogTitle:'Propiedades de la Imagen',
         tooltip:'Propiedades de la Imagen',
-        tooltipShape:'Forma de la Imagen',
-        tooltipShapeOptions:['Responsive','Borde Redondeado','Formato Circular','Marco de foto','Normal'],
-        tooltipImageCaptionIt:'CaptionIt',
         pluginImageTitle:'Atributos de la Imagen',
         pluginLinkTitle:'Atributos del Enlace',
-        pluginImageCaptionTitle:'CaptionIt',
         title:'Titulo',
         src:'Fuente',
         srcHelp:'La selección de una imagen reemplazará la imagen existente con una imagen Inline.',
@@ -101,12 +93,8 @@
       imageAttributes:{
         dialogTitle:'Attributs de l\'image',
         tooltip:'Attributs de l\'image',
-        tooltipShape:'Forme de l\'image',
-        tooltipShapeOptions:['Arrondi','Cercle','Vignette','Aucune'],
-        tooltipImageCaptionIt:'CaptionIt',
         pluginImageTitle:'Attributs de l\'image',
         pluginLinkTitle:'Attributs du lien',
-        pluginImageCaptionTitle:'CaptionIt',
         title:'Titre',
         src:'La source',
         srcHelp:'La sélection d\'une image remplacera l\'image existante par une Image Inline.',
@@ -139,12 +127,8 @@
       imageAttributes:{
         dialogTitle:'圖片提示',
         tooltip:'圖片提示',
-        tooltipShape:'圖片形狀',
-        tooltipShapeOptions:['響應式','圓角','圓形','縮圖','無'],
-        tooltipImageCaptionIt:'標題',
         pluginImageTitle:'圖片屬性',
         pluginLinkTitle:'連結屬性',
-        pluginImageCaptionTitle:'標題',
         title:'標題',
         src:'資源',
         srcHelp:'選擇圖像將用內聯圖像替換現有圖像.',
@@ -179,12 +163,8 @@
       imageAttributes:{
         dialogTitle:'Attributi Immagine',
         tooltip:'Attributi Immagine',
-        tooltipShape:'Forma Immagine',
-        tooltipShapeOptions:['Arrotondata','Circolare','Con cornice','Nessuna'],
-        tooltipImageCaptionIt:'Didascalia E \'',
         pluginImageTitle:'Attributi Immagine',
         pluginLinkTitle:'Attributi Collegamento',
-        pluginImageCaptionTitle:'Didascalia E \'',
         title:'Titolo',
         src:'Fonte',
         srcHelp:'elezione di un\'immagine sostituirà immagine esistente con un inline Immagine.',
@@ -217,12 +197,8 @@
       imageAttributes:{
         dialogTitle:'Bild Eigenschaften',
         tooltip:'Bild Eigenschaften',
-        tooltipShape:'Form',
-        tooltipShapeOptions:['ansprechbar','Gerundet','Kreis','Miniaturansicht','Keiner'],
-        tooltipImageCaptionIt:'Versehe es mit einem Titel',
         pluginImageTitle:'Bild Eigenschaften',
         pluginLinkTitle:'Link Eigenschaften',
-        pluginImageCaptionTitle:'Versehe es mit einem Titel',
         title:'Titel',
         src:'Quelle',
         srcHelp:'Wenn Sie ein Bild auswählen, wird das bestehende Bild durch ein Inlined Image ersetzt.',
@@ -255,12 +231,8 @@
       imageAttributes:{
         dialogTitle:'Resim Özellikleri',
         tooltip:'Resim Özellikleri',
-        tooltipShape:'Resim Şekli',
-        tooltipShapeOptions:['Responsive','Yuvarlatılmış','Daire','Önİzleme','Hiçbiri'],
-        tooltipImageCaptionIt:'Altyazı Bu',
         pluginImageTitle:'Resim Özellikleri',
         pluginLinkTitle:'Bağlantı Özellikleri',
-        pluginImageCaptionTitle:'Altyazı Bu',
         title:'Başlık',
         src:'Kaynak',
         srcHelp:'Bir görüntüyü seçmek, var olan resmi Inlined Image ile değiştirecektir.',
@@ -294,15 +266,7 @@
     imageDialogLayout:'default', /* default|horizontal */
     imageAttributes:{
       icon:'<i class="note-icon-pencil"/>',
-      removeEmpty:true
-    },
-    imageShape:{
-      icon:'<i class="note-icon-picture"/>',
-      /* Must keep the same order as in lang.imageAttributes.tooltipShapeOptions */
-      shapes:['img-responsive','img-rounded','img-circle','img-thumbnail','']
-    },
-    imageCaptionIt:{
-      icon:'<i class="note-icon-magic"/>'
+      removeEmpty:true,
     }
   });
   $.extend($.summernote.plugins,{
@@ -332,10 +296,6 @@
       });
       this.initialize=function(){
         var $container=options.dialogsInBody?$(document.body):$editor;
-        var $shapesOptions='';
-        $.each(options.imageShape.shapes,function(index,value){
-        	if(value)$shapesOptions=$shapesOptions+'<option value="'+value+'">'+lang.imageAttributes.tooltipShapeOptions[index]+'</option>'
-        });
         if(options.imageDialogLayout=='horizontal'){
           var body='<dl class="dl-horizontal">'+
               '<dt><label for="note-image-attributes-title">'+lang.imageAttributes.title+'</label></dt>'+
@@ -349,12 +309,7 @@
               '<dt><label for="note-image-attributes-alt">'+lang.imageAttributes.alt+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control"></dd>'+
               '<dt><label for="note-image-attributes-class">'+lang.imageAttributes.class+'</label></dt>'+
-              '<dd><input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control">'+
-                '<select class="note-image-attributes-class-select btn btn-default">'+
-                  '<option value="">'+lang.imageAttributes.classSelect+'</option>'+
-                  $shapesOptions+
-                  '</select>'+
-                '</dd>'+
+              '<dd><input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control"></dd>'+
               '<dt><label for="note-image-attributes-style">'+lang.imageAttributes.style+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-style" class="note-image-attributes-style form-control"></dd>'+
               '<dt><label for="note-image-attributes-role">'+lang.imageAttributes.role+'</label></dt>'+
@@ -423,12 +378,6 @@
               '<label for="note-image-attributes-class" class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control">'+
-                '<div class="input-group-btn">'+
-                  '<select class="note-image-attributes-class-select btn btn-default">'+
-                    '<option value="">'+lang.imageAttributes.classSelect+'</option>'+
-                    $shapesOptions+
-                  '</select>'+
-                '</div>'+
               '</div>'+
             '</div>'+
             '<div class="form-group">'+
@@ -516,14 +465,6 @@
       		$(this).parent().find('.form-control:first').focus();
       	});
       };
-      this.bindClassesSelector=function(){
-      	$('.note-image-attributes-class-select').on('change',function(){
-				  $.each(options.imageShape.shapes,function(index,value){
-						$('.note-image-attributes-class').val($('.note-image-attributes-class').val().replace(value,""));
-					});
-					$('.note-image-attributes-class').val($.unique($.trim($('.note-image-attributes-class').val()+' '+$(this).val()).replace(/ +(?= )/g,'').split(' ')).join(' '))
-        });
-      };
       this.show=function(){
         var $img=$($editable.data('target'));
         var imgInfo={
@@ -537,209 +478,114 @@
           imgLink:$($img.context).parent().is("a")?$($img.context).parent():null
         };
         this.showLinkDialog(imgInfo)
-          .then(function(imgInfo){
-            ui.hideDialog(self.$dialog);
-            var $img=imgInfo.imgDom;
-            if(options.imageAttributes.removeEmpty){
-              if(imgInfo.alt)$img.attr('alt',imgInfo.alt);else $img.removeAttr('alt');
-              if(imgInfo.title)$img.attr('title',imgInfo.title);else $img.removeAttr('title');
-              if(imgInfo.src)$img.attr('src',imgInfo.src);else $img.attr('src', '#');
-              if(imgInfo.class)$img.attr('class',imgInfo.class);else $img.removeAttr('class');
-              if(imgInfo.style)$img.attr('style',imgInfo.style);else $img.removeAttr('style');
-              if(imgInfo.role)$img.attr('role',imgInfo.role);else $img.removeAttr('role');
-            }else{
-              $img.attr('alt',imgInfo.alt);
-              $img.attr('title',imgInfo.title);
-              $img.attr('class',imgInfo.class);
-              $img.attr('style',imgInfo.style);
-              $img.attr('role',imgInfo.role);
-            }
-            if($img.parent().is("a"))$img.unwrap();
-            var hrefRegex=new RegExp(/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi);
-            if(imgInfo.href.match(hrefRegex)){
-              var lnktxt='<a';
-              if(imgInfo.linkClass)lnktxt+=' class="'+imgInfo.linkClass+'"';
-              lnktxt+=' href="'+imgInfo.href+'" target="'+imgInfo.target+'"';
-              if(imgInfo.linkRel)lnktxt+=' rel="'+imgInfo.linkRel+'"';
-              if(imgInfo.linkRole)lnktxt+=' role="'+imgInfo.linkRole+'"';
-              lnktxt+='></a>';
-              $img.wrap(lnktxt);
-            }
-            $note.val(context.invoke('code'));
-            $note.change();
+            .then(function(imgInfo){
+              ui.hideDialog(self.$dialog);
+              var $img=imgInfo.imgDom;
+              if(options.imageAttributes.removeEmpty){
+                if(imgInfo.alt)$img.attr('alt',imgInfo.alt);else $img.removeAttr('alt');
+                if(imgInfo.title)$img.attr('title',imgInfo.title);else $img.removeAttr('title');
+                if(imgInfo.src)$img.attr('src',imgInfo.src);else $img.attr('src', '#');
+                if(imgInfo.class)$img.attr('class',imgInfo.class);else $img.removeAttr('class');
+                if(imgInfo.style)$img.attr('style',imgInfo.style);else $img.removeAttr('style');
+                if(imgInfo.role)$img.attr('role',imgInfo.role);else $img.removeAttr('role');
+              }else{
+                $img.attr('alt',imgInfo.alt);
+                $img.attr('title',imgInfo.title);
+                $img.attr('class',imgInfo.class);
+                $img.attr('style',imgInfo.style);
+                $img.attr('role',imgInfo.role);
+              }
+              if($img.parent().is("a"))$img.unwrap();
+              var hrefRegex=new RegExp(/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi);
+              if(imgInfo.href.match(hrefRegex)){
+                var lnktxt='<a';
+                if(imgInfo.linkClass)lnktxt+=' class="'+imgInfo.linkClass+'"';
+                lnktxt+=' href="'+imgInfo.href+'" target="'+imgInfo.target+'"';
+                if(imgInfo.linkRel)lnktxt+=' rel="'+imgInfo.linkRel+'"';
+                if(imgInfo.linkRole)lnktxt+=' role="'+imgInfo.linkRole+'"';
+                lnktxt+='></a>';
+                $img.wrap(lnktxt);
+              }
+              $note.val(context.invoke('code'));
+              $note.change();
+            });
+      };
+      this.showLinkDialog=function(imgInfo){
+        return $.Deferred(function(deferred){
+          var $imageTitle=self.$dialog.find('.note-image-attributes-title'),
+              $imageInput=self.$dialog.find('.note-image-input'),
+              $imageSrc=self.$dialog.find('.note-image-attributes-src'),
+              $imageAlt=self.$dialog.find('.note-image-attributes-alt'),
+              $imageClass=self.$dialog.find('.note-image-attributes-class'),
+              $imageStyle=self.$dialog.find('.note-image-attributes-style'),
+              $imageRole=self.$dialog.find('.note-image-attributes-role'),
+              $linkHref=self.$dialog.find('.note-image-attributes-href'),
+              $linkTarget=self.$dialog.find('.note-image-attributes-target'),
+              $linkClass=self.$dialog.find('.note-image-attributes-link-class'),
+              $linkRel=self.$dialog.find('.note-image-attributes-link-rel'),
+              $linkRole=self.$dialog.find('.note-image-attributes-link-role'),
+              $editBtn=self.$dialog.find('.note-image-attributes-btn');
+          if(imgInfo.imgLink){
+            $linkHref.val(imgInfo.imgLink.attr('href'));
+            $linkClass.val(imgInfo.imgLink.attr('class'));
+            $linkRole.val(imgInfo.imgLink.attr('role'));
+            $linkTarget.find('option').each(function(){
+              if($(this).val()==imgInfo.imgLink.attr('target'))$(this).attr('selected','selected');
+            });
+            $linkRel.find('option').each(function(){
+              if($(this).val()==imgInfo.imgLink.attr('rel'))$(this).attr('selected','selected');
+            });
+          }
+          ui.onDialogShown(self.$dialog,function(){
+            context.triggerEvent('dialog.shown');
+            $imageInput.replaceWith(
+              $imageInput.clone()
+                         .on('change',function(){
+                           var callbacks=options.callbacks;
+                           if(callbacks.onImageUpload){
+                             context.triggerEvent('image.upload',this.files[0]);
+                           }else{
+                             readFileAsDataURL(this.files[0]).then(function(dataURL){
+                               $imageSrc.val(dataURL)
+                             }).fail(function(){
+                               context.triggerEvent('image.upload.error');
+                             });
+                           }
+                         }).val('')
+            );
+            $editBtn.click(function(e){
+              e.preventDefault();
+              deferred.resolve({
+                imgDom:imgInfo.imgDom,
+                title:$imageTitle.val(),
+                src:$imageSrc.val(),
+                alt:$imageAlt.val(),
+                class:$imageClass.val(),
+                style:$imageStyle.val(),
+                role:$imageRole.val(),
+                href:$linkHref.val(),
+                target:$linkTarget.val(),
+                linkClass:$linkClass.val(),
+                linkRel:$linkRel.val(),
+                linkRole:$linkRole.val()
+              });
+            });
+            $imageTitle.val(imgInfo.title).focus;
+            $imageSrc.val(imgInfo.src)
+            $imageAlt.val(imgInfo.alt);
+            $imageClass.val(imgInfo.class);
+            $imageStyle.val(imgInfo.style);
+            $imageRole.val(imgInfo.role);
+            self.bindEnterKey($editBtn);
+            self.bindLabels();
           });
-        };
-        this.showLinkDialog=function(imgInfo){
-          return $.Deferred(function(deferred){
-            var $imageTitle=self.$dialog.find('.note-image-attributes-title'),
-                $imageInput=self.$dialog.find('.note-image-input'),
-                $imageSrc=self.$dialog.find('.note-image-attributes-src'),
-                $imageAlt=self.$dialog.find('.note-image-attributes-alt'),
-                $imageClass=self.$dialog.find('.note-image-attributes-class'),
-                $imageStyle=self.$dialog.find('.note-image-attributes-style'),
-                $imageRole=self.$dialog.find('.note-image-attributes-role'),
-                $linkHref=self.$dialog.find('.note-image-attributes-href'),
-                $linkTarget=self.$dialog.find('.note-image-attributes-target'),
-                $linkClass=self.$dialog.find('.note-image-attributes-link-class'),
-                $linkRel=self.$dialog.find('.note-image-attributes-link-rel'),
-                $linkRole=self.$dialog.find('.note-image-attributes-link-role'),
-                $editBtn=self.$dialog.find('.note-image-attributes-btn');
-                if(imgInfo.imgLink){
-                  $linkHref.val(imgInfo.imgLink.attr('href'));
-                  $linkClass.val(imgInfo.imgLink.attr('class'));
-                  $linkRole.val(imgInfo.imgLink.attr('role'));
-                  $linkTarget.find('option').each(function(){
-                    if($(this).val()==imgInfo.imgLink.attr('target'))$(this).attr('selected','selected');
-                  });
-                  $linkRel.find('option').each(function(){
-                    if($(this).val()==imgInfo.imgLink.attr('rel'))$(this).attr('selected','selected');
-                  });
-                }
-                ui.onDialogShown(self.$dialog,function(){
-                  context.triggerEvent('dialog.shown');
-                  $imageInput.replaceWith($imageInput.clone()
-                    .on('change',function(){
-                      var callbacks=options.callbacks;
-                      if(callbacks.onImageUpload){
-                        context.triggerEvent('image.upload',this.files[0]);
-                      }else{
-                        readFileAsDataURL(this.files[0]).then(function(dataURL){
-                          $imageSrc.val(dataURL)
-                        }).fail(function(){
-                          context.triggerEvent('image.upload.error');
-                        });
-                      }
-                    }).val('')
-                  );
-                  $editBtn.click(function(e){
-                    e.preventDefault();
-                    deferred.resolve({
-                      imgDom:imgInfo.imgDom,
-                      title:$imageTitle.val(),
-                      src:$imageSrc.val(),
-                      alt:$imageAlt.val(),
-                      class:$imageClass.val(),
-                      style:$imageStyle.val(),
-                      role:$imageRole.val(),
-                      href:$linkHref.val(),
-                      target:$linkTarget.val(),
-                      linkClass:$linkClass.val(),
-                      linkRel:$linkRel.val(),
-                      linkRole:$linkRole.val()
-                    });
-                  });
-                  $imageTitle.val(imgInfo.title).focus;
-                  $imageSrc.val(imgInfo.src)
-                  $imageAlt.val(imgInfo.alt);
-                  $imageClass.val(imgInfo.class);
-                  $imageStyle.val(imgInfo.style);
-                  $imageRole.val(imgInfo.role);
-                  self.bindEnterKey($editBtn);
-                  self.bindLabels();
-                  self.bindClassesSelector();
-                });
-                ui.onDialogHidden(self.$dialog,function(){
-                  $editBtn.off('click');
-                  if(deferred.state()==='pending')deferred.reject();
-                });
-                ui.showDialog(self.$dialog);
-              });
-            };
-          },
-    'imageShape':function(context){
-      var ui=$.summernote.ui;
-      var $editable=context.layoutInfo.editable;
-      var $note=context.layoutInfo.note;
-      var options=context.options;
-      var lang=options.langInfo;
-      context.memo('button.imageShape',function(){
-        var button=ui.buttonGroup([
-          ui.button({
-    	      className:'dropdown-toggle',
-    	      contents:options.imageShape.icon+' <span class="caret"></span>',
-    	      tooltip:lang.imageAttributes.tooltipShape,
-    	      data:{
-    		      toggle:'dropdown'
-            }
-          }),
-          ui.dropdown({
-    	      className:'dropdown-shape',
-    	      items:lang.imageAttributes.tooltipShapeOptions,
-    	      click:function(event){
-              event.preventDefault();
-    		      var $button=$(event.target);
-    		      var $img=$($editable.data('target'));
-    		      var index=$.inArray(
-                $button.data('value'),
-                lang.imageAttributes.tooltipShapeOptions
-              );
-    		      $.each(options.imageShape.shapes,function(index,value){
-                $img.removeClass(value);
-              });
-    		      $img.addClass(options.imageShape.shapes[index]);
-    	        context.invoke('editor.afterCommand');
-    	      }
-          })
-        ]);
-        return button.render();
-      });
-    },
-    'imageCaptionIt':function(context){
-      var ui=$.summernote.ui;
-      var $editable=context.layoutInfo.editable;
-      var $note=context.layoutInfo.note;
-      var options=context.options;
-      var lang=options.langInfo;
-      context.memo('button.imageCaptionIt',function(){
-        var button=ui.button({
-            contents:options.imageCaptionIt.icon,
-            tooltip:lang.imageAttributes.tooltipCaptionIt,
-            click:function(){
-              var img=$($editable.data('target'));
-              $(img).captionit();
-            }
+          ui.onDialogHidden(self.$dialog,function(){
+            $editBtn.off('click');
+            if(deferred.state()==='pending')deferred.reject();
+          });
+          ui.showDialog(self.$dialog);
         });
-        return button.render();
-      });
+      };
     }
   });
 }));
-/* Modified From https://github.com/northk/captionate */
-(function($){
-  $.fn.captionit=function(){
-    return this.each(function(){
-      var $this=$(this);
-      var titleText=$this.attr('title');
-      var altText=$this.attr('alt');
-      var classList=$this.attr('class');
-      var inlineStyles=$this.attr('style');
-      var imgWidth=$this.width();
-      $this.removeAttr('class');
-      $this.removeAttr('style');
-      var $parentAnchorLink=$this.parent();
-      if($parentAnchorLink.is('a')){
-        $newFigure=$parentAnchorLink.wrap('<figure></figure>').parent();
-        if(titleText){
-          $parentAnchorLink.after('<figcaption>'+titleText+'</figcaption>');
-        }else{
-          $parentAnchorLink.after('<figcaption>'+altText+'</figcaption>');
-        }
-        $newFigure.addClass(classList);
-        $newFigure.attr('style',inlineStyles);
-        $newFigure.width(imgWidth);
-        $newFigure.parent('p').before($newFigure);
-      }else{
-        $newFigure=$this.wrap('<figure></figure>').parent();
-        if(titleText){
-          $this.after('<figcaption>'+titleText+'</figcaption>');
-        }else{
-          $this.after('<figcaption>'+altText+'</figcaption>');
-        }
-        $newFigure.addClass(classList);
-        $newFigure.attr('style',inlineStyles);
-        $newFigure.width(imgWidth);
-        $newFigure.parent('p').before($newFigure);
-      }
-    });
-  };
-})(jQuery);
