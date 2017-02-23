@@ -1,3 +1,7 @@
+/**
+ * Summernote Image Attributes
+ * https://github.com/StudioJunkyard/summernote-image-attributes
+ */
 (function(factory){
   if(typeof define==='function'&&define.amd){
     define(['jquery'],factory);
@@ -267,6 +271,12 @@
     imageAttributes:{
       icon:'<i class="note-icon-pencil"/>',
       removeEmpty:true,
+    },
+    displayFields:{
+      imageBasic:true,
+      imageExtra:false,
+      linkBasic:true,
+      linkExtra:false
     }
   });
   $.extend($.summernote.plugins,{
@@ -297,8 +307,9 @@
       this.initialize=function(){
         var $container=options.dialogsInBody?$(document.body):$editor;
         if(options.imageDialogLayout=='horizontal'){
-          var body='<dl class="dl-horizontal">'+
-              '<dt><label for="note-image-attributes-title">'+lang.imageAttributes.title+'</label></dt>'+
+          var body='<dl class="dl-horizontal">';
+          if (options.displayFields.imageBasic) {
+              body += '<dt><label for="note-image-attributes-title">'+lang.imageAttributes.title+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control"></dd>'+
               '<dt><label for="note-image-attributes-src">'+lang.imageAttributes.src+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control"></dd>'+
@@ -307,16 +318,20 @@
               '<dt></dt>'+
               '<dd><small class="help-block">'+lang.imageAttributes.srcHelp+'</small></dd>'+
               '<dt><label for="note-image-attributes-alt">'+lang.imageAttributes.alt+'</label></dt>'+
-              '<dd><input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control"></dd>'+
-              '<dt><label for="note-image-attributes-class">'+lang.imageAttributes.class+'</label></dt>'+
+              '<dd><input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control"></dd>';
+          }
+          if (options.displayFields.imageExtra) {
+              body += '<dt><label for="note-image-attributes-class">'+lang.imageAttributes.class+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control"></dd>'+
               '<dt><label for="note-image-attributes-style">'+lang.imageAttributes.style+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-style" class="note-image-attributes-style form-control"></dd>'+
               '<dt><label for="note-image-attributes-role">'+lang.imageAttributes.role+'</label></dt>'+
-              '<dd><input type="text" id="note-image-attributes-role" class="note-image-attributes-role form-control"></dd>'+
-            '</dl>'+
-            '<hr>'+
-            '<h4>'+lang.imageAttributes.pluginLinkTitle+'</h4>'+
+              '<dd><input type="text" id="note-image-attributes-role" class="note-image-attributes-role form-control"></dd>';
+          }
+          body += '</dl>'+
+            '<hr>';
+          if (options.displayFields.linkBasic) {
+              body += '<h4>'+lang.imageAttributes.pluginLinkTitle+'</h4>'+
             '<dl class="dl-horizontal">'+
               '<dt><label for="note-image-attributes-link-href">'+lang.imageAttributes.href+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-link-href" class="note-image-attributes-href form-control"></dd>'+
@@ -326,8 +341,10 @@
                 '<option value="_blank">Blank</option>'+
                 '<option value="_top">Top</option>'+
                 '<option value="_parent">Parent</option>'+
-              '</select></dd>'+
-              '<dt><label for="note-image-attributes-link-class">'+lang.imageAttributes.linkClass+'</label></dt>'+
+              '</select></dd>';
+          }
+          if (options.displayFields.linkExtra) {
+              body += '<dt><label for="note-image-attributes-link-class">'+lang.imageAttributes.linkClass+'</label></dt>'+
               '<dd><input type="text" id="note-image-attributes-link-class" class="note-image-attributes-link-class form-control"></dd>'+
               '<dt><label for="note-image-attributes-link-rel">'+lang.imageAttributes.rel+'</label></dt>'+
               '<dd><select id="note-image-attributes-link-rel" class="note-image-attributes-link-rel form-control">'+
@@ -346,11 +363,13 @@
                 '<option value="tag">'+lang.imageAttributes.relTag+'</option>'+
               '</select></dd>'+
               '<dt><label for="note-image-attributes-link-role">'+lang.imageAttributes.linkRole+'</label></dt>'+
-              '<dd><input type="text" id="note-image-attributes-link-role" class="note-image-attributes-link-role form-control"></dd>'+
-            '</dl>';
+              '<dd><input type="text" id="note-image-attributes-link-role" class="note-image-attributes-link-role form-control"></dd>';
+          }
+          body += '</dl>';
         }else{
-          var body='<div class="form-group">'+
-              '<label for="note-image-attributes-title" class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
+          var body='<div class="form-group">';
+          if (options.displayFields.imageBasic) {
+              body += '<label for="note-image-attributes-title" class="control-label col-xs-2">'+lang.imageAttributes.title+'</label>'+
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control">'+
               '</div>'+
@@ -373,8 +392,10 @@
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control">'+
               '</div>'+
-            '</div>'+
-            '<div class="form-group">'+
+            '</div>';
+          }
+          if (options.displayFields.imageExtra) {
+              body += '<div class="form-group">'+
               '<label for="note-image-attributes-class" class="control-label col-xs-2">'+lang.imageAttributes.class+'</label>'+
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control">'+
@@ -391,10 +412,14 @@
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-role" class="note-image-attributes-role form-control">'+
               '</div>'+
-            '</div>'+
-            '<h4>'+lang.imageAttributes.pluginLinkTitle+'</h4>'+
-            '<hr>'+
-            '<div class="form-group">'+
+            '</div>';
+          }
+          if (options.displayFields.linkBasic || options.displayFields.linkExtra) {
+            body += '<h4>'+lang.imageAttributes.pluginLinkTitle+'</h4>'+
+              '<hr>';
+          }
+          if (options.displayFields.linkBasic) {
+              body += '<div class="form-group">'+
               '<label for="note-image-attributes-link-href" class="control-label col-xs-2">'+lang.imageAttributes.href+'</label>'+
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-link-href" class="note-image-attributes-href form-control">'+
@@ -410,8 +435,10 @@
                   '<option value="_parent">Parent</option>'+
                 '</select>'+
               '</div>'+
-            '</div>'+
-            '<div class="form-group">'+
+            '</div>';
+          }
+          if (options.displayFields.linkExtra) {
+              body += '<div class="form-group">'+
               '<label for="note-image-attributes-link-class" class="control-label col-xs-2">'+lang.imageAttributes.linkClass+'</label>'+
               '<div class="input-group col-xs-10">'+
                 '<input type="text" id="note-image-attributes-link-class" class="note-image-attributes-link-class form-control">'+
@@ -443,6 +470,7 @@
                 '<input type="text" id="note-image-attributes-link-role" class="note-image-attributes-link-role form-control">'+
               '</div>'+
             '</div>';
+          }
         }
         this.$dialog=ui.dialog({
           title:lang.imageAttributes.dialogTitle,

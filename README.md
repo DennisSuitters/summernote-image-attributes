@@ -37,6 +37,12 @@ $(document).ready(function() {
             imageDialogLayout:'default', // default|horizontal
             icon:'<i class="note-icon-pencil"/>',
             removeEmpty:false // true = remove attributes | false = leave empty if present
+        },
+        displayFields:{
+            imageBasic:true,  // show/hide Title, Source, Alt fields
+            imageExtra:false, // show/hide Alt, Class, Style, Role fields
+            linkBasic:true,   // show/hide URL and Target fields for link
+            linkExtra:false   // show/hide Class, Rel, Role fields for link
         }
     });
 });
