@@ -32,7 +32,7 @@ $(document).ready(function() {
                 ['remove', ['removeMedia']]
             ],
         },
-        lang: 'en-US'
+        lang: 'en-US',
         imageAttributes:{
             imageDialogLayout:'default', // default|horizontal
             icon:'<i class="note-icon-pencil"/>',
