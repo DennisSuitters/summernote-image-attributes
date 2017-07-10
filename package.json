@@ -1,0 +1,9 @@
+{
+  "name": "summernote-image-attributes",
+  "version": "1.0.0",
+  "description": "Summernote plugin to edit image attributes",
+  "main": "summernote-image-attributes.js",
+  "repository": "https://github.com/StudioJunkyard/summernote-image-attributes.git",
+  "author": "Dennis Suitters <info@studiojunkyard.com>",
+  "license": "MIT"
+}
