@@ -587,6 +587,12 @@
               $linkRel=self.$dialog.find('.note-image-attributes-link-rel'),
               $linkRole=self.$dialog.find('.note-image-attributes-link-role'),
               $editBtn=self.$dialog.find('.note-image-attributes-btn');
+          // clear imgLink values
+          $linkHref.val('')
+          $linkClass.val('')
+          $linkRole.val('')
+          $linkTarget.val('_self')
+          $linkRel.val('')
           if(imgInfo.imgLink){
             $linkHref.val(imgInfo.imgLink.attr('href'));
             $linkClass.val(imgInfo.imgLink.attr('class'));
