@@ -359,7 +359,6 @@
           $linkTarget.val();
           $linkRel.val();
           if(imgInfo.imgLink){
-            alert('here');
             $linkHref.val(imgInfo.imgLink.attr('href'));
             $linkClass.val(imgInfo.imgLink.attr('class'));
             $linkRole.val(imgInfo.imgLink.attr('role'));
