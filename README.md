@@ -15,7 +15,7 @@ Include the following code after including Summernote:
 ```
 
 #### 2. Supported languages
-Currently available in US English (Default), UK English, AU English (Aussie Slang), Spanish, French, Chinese (Traditional), Italian, German and Turkish!
+Currently available in US English (Default), UK English, Spanish, French, Chinese (Traditional), Italian, German and Turkish!
 
 #### 3. Summernote options
 Finally, customize the Summernote image popover.
