@@ -204,9 +204,10 @@
             $img.attr('role',imgInfo.role);
           }
           if($img.parent().is("a"))$img.unwrap();
-          var hrefRegex=new RegExp(/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi);
+//          var hrefRegex=new RegExp(/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi);
 // TODO: modify regex to include ftp:, mailto:, file:, and tel:
-          if(imgInfo.href.match(hrefRegex)){
+//          if(imgInfo.href.match(hrefRegex)){
+          if(imgInfo.href){
             var lnktxt='<a';
             if(imgInfo.linkClass)lnktxt+=' class="'+imgInfo.linkClass+'"';
             lnktxt+=' href="'+imgInfo.href+'" target="'+imgInfo.target+'"';
@@ -220,7 +221,6 @@
         });
       };
       this.showImageAttributesDialog=function(imgInfo){
-// There is currently a strange issue grabbing the link information and to display in the input fields.
         return $.Deferred(function(deferred){
           var $imageTitle=self.$dialog.find('.note-image-attributes-title'),
               $imageInput=self.$dialog.find('.note-image-input'),
