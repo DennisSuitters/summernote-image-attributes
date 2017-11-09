@@ -196,7 +196,7 @@
             if(imgInfo.style)$img.attr('style',imgInfo.style);else $img.removeAttr('style');
             if(imgInfo.role)$img.attr('role',imgInfo.role);else $img.removeAttr('role');
           }else{
-            if(imgInfo.src)$img.attr('src',imgInfo.src);else$img.attr('src', '#');
+            if(imgInfo.src)$img.attr('src',imgInfo.src);else $img.attr('src', '#');
             $img.attr('alt',imgInfo.alt);
             $img.attr('title',imgInfo.title);
             $img.attr('class',imgInfo.class);
