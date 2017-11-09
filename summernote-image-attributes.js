@@ -362,6 +362,7 @@
             if (imgInfo.src)    $img.attr('src',imgInfo.src);     else $img.attr('src', '#');
             $img.attr('alt',imgInfo.alt);
             $img.attr('title',imgInfo.title);
+            $img.attr('src',imgInfo.src);
             $img.attr('class',imgInfo.class);
             $img.attr('style',imgInfo.style);
             $img.attr('role',imgInfo.role);
