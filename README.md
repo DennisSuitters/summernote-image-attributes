@@ -1,6 +1,8 @@
 # summernote-image-attributes
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
+[![Build Status](https://travis-ci.org/DiemenDesign/summernote-image-attributes.svg?branch=master)](https://travis-ci.org/DiemenDesign/summernote-image-attributes)
+
 Adds a button to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes (Thanks to [minidc](https://github.com/ninidc)).
 
 ### Installation
