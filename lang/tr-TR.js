@@ -31,7 +31,7 @@ $.extend(true,$.summernote.lang,{
       relPrev:'Önceki: Önceki belgeye giden bağlantı',
       relSearch:'Arama: Belge için bir arama aracına bağlantı olduğunu belirtir.',
       relTag:'Etiket: Belge için bir etiket olduğunu belirtir',
-      editBtn: 'OK'
+      editBtn: 'tamam'
     }
   }
 });

@@ -367,9 +367,6 @@
             $img.attr('role',imgInfo.role);
           }
           if($img.parent().is("a")) $img.unwrap();
-//          var hrefRegex=new RegExp(/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi);
-// TODO: modify regex to include ftp:, mailto:, file:, and tel:
-//          if(imgInfo.href.match(hrefRegex)){
           if (imgInfo.href) {
             var lnktxt = '<a';
             if (imgInfo.linkClass) lnktxt += ' class="' + imgInfo.linkClass + '"';

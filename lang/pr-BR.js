@@ -31,7 +31,7 @@ $.extend(true,$.summernote.lang,{
       relPrev:'Prev: O documento anterior em uma seleção',
       relSearch:'Search: Links para um mecanismos de busca para o documento',
       relTag:'Tag: Uma etiqueta (palavra-chave) para o documento atual',
-      editBtn: 'OK'
+      editBtn: 'DE ACUERDO'
     }
   }
 });
