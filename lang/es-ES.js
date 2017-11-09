@@ -30,7 +30,8 @@ $.extend(true,$.summernote.lang,{
       relPrefetch:'PreFetch: Specifies that the target document should be cached',
       relPrev:'Prev: Enlaza al documento anterior en una selección',
       relSearch:'Search: Enlaza a una herramienta de búsqueda para el documento',
-      relTag:'Tag: Un etiqueta (palabra clave) para el documento actual'
+      relTag:'Tag: Un etiqueta (palabra clave) para el documento actual',
+      editBtn: 'OK'
     }
   }
 });

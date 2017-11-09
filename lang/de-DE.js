@@ -30,7 +30,8 @@ $.extend(true,$.summernote.lang,{
       relPrefetch:'PreFetch: Gibt an, dass die Seite gecacht werden soll',
       relPrev:'Prev: Die zuletzt aktive Seite',
       relSearch:'Search: Link zur Dokumentsuche',
-      relTag:'Tag: Ein Schl&uuml;sselwort (keyword) f&uuml;r diese Seite'
+      relTag:'Tag: Ein Schl&uuml;sselwort (keyword) f&uuml;r diese Seite',
+      editBtn: 'OK'
     }
   }
 });

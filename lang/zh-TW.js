@@ -32,7 +32,8 @@ $.extend(true,$.summernote.lang,{
       relPrefetch:'預存: 指定該頁面啟用預存瀏覽',
       relPrev:'上一步: 上一個被選擇的頁面',
       relSearch:'搜尋: 連至搜尋文件',
-      relTag:'標籤: 為該文件設定標籤(關鍵字)'
+      relTag:'標籤: 為該文件設定標籤(關鍵字)',
+      editBtn: 'OK'
     }
   }
 });

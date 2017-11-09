@@ -30,7 +30,8 @@ $.extend(true,$.summernote.lang,{
       relPrefetch:'ÖnBellek(PreFetch): Hedef bağlantının ön belleğe alınması gerektiğini belirtir',
       relPrev:'Önceki: Önceki belgeye giden bağlantı',
       relSearch:'Arama: Belge için bir arama aracına bağlantı olduğunu belirtir.',
-      relTag:'Etiket: Belge için bir etiket olduğunu belirtir'
+      relTag:'Etiket: Belge için bir etiket olduğunu belirtir',
+      editBtn: 'OK'
     }
   }
 });
