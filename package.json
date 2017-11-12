@@ -5,8 +5,5 @@
   "main": "summernote-image-attributes.js",
   "repository": "https://github.com/DiemenDesign/summernote-image-attributes.git",
   "author": "DiemenDesign <dennis@studiojunkyard.com>",
-  "license": "MIT",
-  "scripts": {
-    "test": "grunt travis -v"
-  }
+  "license": "MIT"
 }
