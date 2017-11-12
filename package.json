@@ -5,5 +5,13 @@
   "main": "summernote-image-attributes.js",
   "repository": "https://github.com/DiemenDesign/summernote-image-attributes.git",
   "author": "DiemenDesign <dennis@studiojunkyard.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "grunt-cli": "0.1.9",
+    "grunt-contrib-jshint": "0.6.0"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  }
 }
