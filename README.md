@@ -1,4 +1,7 @@
 # summernote-image-attributes
+
+Summernote-image-attributes has undergone a make over, we redesigned the Dialog Layout to make it easier to use.
+
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 
 Adds a button to the image popover to edit title, alt, class and style attributes, and Links with relevant Attributes.
@@ -16,6 +19,7 @@ Include the following code after including Summernote, to change the language fr
 
 #### 2. Supported languages
 Currently available in US English (Default), Spanish, French, Chinese (Traditional), Italian, German and Turkish!
+Language files will be updated shortly.
 
 #### 3. Summernote options
 Finally, customize the Summernote image popover.
@@ -33,15 +37,9 @@ $(document).ready(function() {
         },
         lang: 'en-US', // Change to your chosen language
         imageAttributes:{
-            imageDialogLayout:'default', // default|horizontal
             icon:'<i class="note-icon-pencil"/>',
-            removeEmpty:false // true = remove attributes | false = leave empty if present
-        },
-        displayFields:{
-            imageBasic:true,  // show/hide Title, Source, Alt fields
-            imageExtra:false, // show/hide Alt, Class, Style, Role fields
-            linkBasic:true,   // show/hide URL and Target fields for link
-            linkExtra:false   // show/hide Class, Rel, Role fields for link
+            removeEmpty:false, // true = remove attributes | false = leave empty if present
+            disableUpload: false // true = don't display Upload Options | Display Upload Options
         }
     });
 });

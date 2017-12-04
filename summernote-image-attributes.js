@@ -26,49 +26,36 @@
       imageAttributes: {
         dialogTitle: 'Image Attributes',
         tooltip: 'Image Attributes',
-        pluginImageTitle: 'Image Attributes',
-        pluginLinkTitle: 'Link Attributes',
-        title: 'Title',
-        src: 'Source',
-        srcHelp: 'Selecting an image will replace existing image with an Inlined Image.',
-        alt: 'Alt',
-        class: 'Class',
-        classSelect: 'Select Class',
-        style: 'Style',
-        role: 'Role',
-        href: 'URL',
-        target: 'Target',
-        linkClass: 'Class',
-        linkRole: 'Role',
-        rel: 'Rel',
-        relBlank: 'Do not use Rel Attribute',
-        relAlternate: 'Alternate: Links to an alternate version of the document',
-        relAuthor: 'Author: Links to the Author of the Document',
-        relBookmark: 'Bookmark: Permanent URL used for Bookmarking',
-        relHelp: 'Help: Links to a Help Document',
-        relLicense: 'License: Links to copyright information for the document',
-        relNext: 'Next: The next document in a selection',
-        relNofollow: 'NoFollow: Links to an unendorsed document, like a paid link, also stops Search Engines following this link',
-        relNoreferrer: 'NoReferrer: Specifies that the browser should not send a HTTP Header',
-        relPrefetch: 'PreFetch: Specifies that the target document should be cached',
-        relPrev: 'Prev: The previous document in a selection',
-        relSearch: 'Search: Links to a search tool for the document',
-        relTag: 'Tag: A tag (Keyword) for the current document',
+        tabImage: 'Image',
+          src: 'Source',
+          browse: 'Browse',
+          title: 'Title',
+          alt: 'Alt Text',
+          dimensions: 'Dimensions',
+        tabAttributes: 'Attributes',
+          class: 'Class',
+          style: 'Style',
+          role: 'Role',
+        tabLink: 'Link',
+          linkHref: 'URL',
+          linkTarget: 'Target',
+          linkTargetInfo: 'Options: _self, _blank, _top, _parent',
+          linkRel: 'Rel',
+          linkRelInfo: 'Options: alternate, author, bookmark, help, license, next, nofollow, noreferrer, prefetch, prev, search, tag',
+          linkRole: 'Role',
+        tabUpload: 'Upload',
+          upload: 'Upload',
+        tabBrowse: 'Browse',
         editBtn: 'OK'
       }
     }
   });
   $.extend($.summernote.options, {
-    imageDialogLayout: 'default', /* default|horizontal */
     imageAttributes: {
       icon: '<i class="note-icon-pencil"/>',
       removeEmpty: true,
-    },
-    displayFields: {
-      imageBasic: true,
-      imageExtra: false,
-      linkBasic: true,
-      linkExtra: false
+      disableUpload: false,
+      imageFolder: ''
     }
   });
   $.extend($.summernote.plugins, {
@@ -80,11 +67,11 @@
       var $editable = context.layoutInfo.editable;
       var options = context.options;
       var lang = options.langInfo;
-      var imageLimitation = '';
+      var imageAttributesLimitation = '';
       if (options.maximumImageFileSize) {
         var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
         var readableSize = (options.maximumImageFileSize/Math.pow(1024,unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
-        imageLimitation = '<small>' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
+        imageAttributesLimitation = '<small class="help-block">' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
       }
       context.memo('button.imageAttributes',function() {
         var button = ui.button({
@@ -98,227 +85,112 @@
       });
       this.initialize=function() {
         var $container = options.dialogsInBody ? $(document.body) : $editor;
-        if (options.imageDialogLayout=='horizontal') {
-          var body='<dl class="dl-horizontal">';
-          if (options.displayFields.imageBasic) {
-            body += '<dt>' +
-              '<label for="note-image-attributes-title">' + lang.imageAttributes.title + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-src">' + lang.imageAttributes.src + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-group-select-from-files"></label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="file" id="note-group-select-from-files" name="file" accept="image/*" class="note-image-input form-control">' + imageLimitation +
-            '</dd>' +
-            '<dt>' +
-            '</dt>' +
-            '<dd>' +
-              '<small class="help-block">' + lang.imageAttributes.srcHelp + '</small>' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-alt">' + lang.imageAttributes.alt + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control">' +
-            '</dd>';
-          }
-          if (options.displayFields.imageExtra) {
-            body += '<dt>' +
-              '<label for="note-image-attributes-class">' + lang.imageAttributes.class + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-style">' + lang.imageAttributes.style + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-style" class="note-image-attributes-style form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-role">' + lang.imageAttributes.role + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-role" class="note-image-attributes-role form-control">' +
-            '</dd>';
-          }
-          body += '</dl>' +
-          '<hr>';
-          if (options.displayFields.linkBasic) {
-            body += '<h4>' + lang.imageAttributes.pluginLinkTitle + '</h4>' +
-            '<dl class="dl-horizontal">' +
-            '<dt>' +
-              '<label for="note-image-attributes-link-href">' + lang.imageAttributes.href + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-link-href" class="note-image-attributes-href form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-link-target">' + lang.imageAttributes.target + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<select id="note-image-attributes-link-target" class="note-image-attributes-target form-control">' +
-                '<option value="_self">Self</option>' +
-                '<option value="_blank">Blank</option>' +
-                '<option value="_top">Top</option>' +
-                '<option value="_parent">Parent</option>' +
-              '</select>' +
-            '</dd>';
-          }
-          if (options.displayFields.linkExtra) {
-            body += '<dt>' +
-              '<label for="note-image-attributes-link-class">' + lang.imageAttributes.linkClass + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-link-class" class="note-image-attributes-link-class form-control">' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-link-rel">' + lang.imageAttributes.rel + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<select id="note-image-attributes-link-rel" class="note-image-attributes-link-rel form-control">' +
-                '<option value="">' + lang.imageAttributes.relBlank + '</option>' +
-                '<option value="alternate">' + lang.imageAttributes.relAlternate + '</option>' +
-                '<option value="author">' + lang.imageAttributes.relAuthor + '</option>' +
-                '<option value="bookmark">' + lang.imageAttributes.relBookmark + '</option>' +
-                '<option value="help">' + lang.imageAttributes.relHelp + '</option>' +
-                '<option value="license">' + lang.imageAttributes.relLicense + '</option>' +
-                '<option value="next">' + lang.imageAttributes.relNext + '</option>' +
-                '<option value="nofollow">' + lang.imageAttributes.relNofollow + '</option>' +
-                '<option value="noreferrer">' + lang.imageAttributes.relNoreferrer + '</option>' +
-                '<option value="prefetch">' + lang.imageAttributes.relPrefetch + '</option>' +
-                '<option value="prev">' + lang.imageAttributes.relPrev + '</option>' +
-                '<option value="search">' + lang.imageAttributes.relSearch + '</option>' +
-                '<option value="tag">' + lang.imageAttributes.relTag + '</option>' +
-              '</select>' +
-            '</dd>' +
-            '<dt>' +
-              '<label for="note-image-attributes-link-role">' + lang.imageAttributes.linkRole + '</label>' +
-            '</dt>' +
-            '<dd>' +
-              '<input type="text" id="note-image-attributes-link-role" class="note-image-attributes-link-role form-control">' +
-            '</dd>';
-          }
-          body += '</dl>';
-        } else {
-          var body = '<div class="form-group">';
-          if (options.displayFields.imageBasic) {
-            body += '<label for="note-image-attributes-title" class="control-label col-xs-2">' + lang.imageAttributes.title + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-title" class="note-image-attributes-title form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-src" class="control-label col-xs-2">' + lang.imageAttributes.src + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-src" class="note-image-attributes-src form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group note-group-select-from-files">' +
-              '<label class="control-label col-xs-2"></label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input class="note-image-input form-control" type="file" name="file" accept="image/*" />' + imageLimitation +
-                '<small class="help-block">' + lang.imageAttributes.srcHelp + '</small>' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-alt" class="control-label col-xs-2">' + lang.imageAttributes.alt + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-alt" class="note-image-attributes-alt form-control">' +
-              '</div>' +
-            '</div>';
-          }
-          if (options.displayFields.imageExtra) {
-            body += '<div class="form-group">' +
-              '<label for="note-image-attributes-class" class="control-label col-xs-2">' + lang.imageAttributes.class + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-class" class="note-image-attributes-class form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-style" class="control-label col-xs-2">' + lang.imageAttributes.style + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-style" class="note-image-attributes-style form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-role" class="control-label col-xs-2">' + lang.imageAttributes.role + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-role" class="note-image-attributes-role form-control">' +
-              '</div>' +
-            '</div>';
-          }
-          if (options.displayFields.linkBasic || options.displayFields.linkExtra) {
-            body += '<h4>'+lang.imageAttributes.pluginLinkTitle+'</h4>' +
-            '<hr>';
-          }
-          if (options.displayFields.linkBasic) {
-            body += '<div class="form-group">' +
-              '<label for="note-image-attributes-link-href" class="control-label col-xs-2">' + lang.imageAttributes.href + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-link-href" class="note-image-attributes-href form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-link-target" class="control-label col-xs-2">' + lang.imageAttributes.target + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<select id="note-image-attributes-link-target" class="note-image-attributes-target form-control">' +
-                  '<option value="_self">Self</option>' +
-                  '<option value="_blank">Blank</option>' +
-                  '<option value="_top">Top</option>' +
-                  '<option value="_parent">Parent</option>' +
-                '</select>' +
-              '</div>' +
-            '</div>';
-          }
-          if (options.displayFields.linkExtra) {
-            body += '<div class="form-group">' +
-              '<label for="note-image-attributes-link-class" class="control-label col-xs-2">' + lang.imageAttributes.linkClass + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-link-class" class="note-image-attributes-link-class form-control">' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-link-rel" class="control-label col-xs-2">' + lang.imageAttributes.rel + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<select id="note-image-attributes-link-rel" class="note-image-attributes-link-rel form-control">' +
-                  '<option value="">' + lang.imageAttributes.relBlank + '</option>' +
-                  '<option value="alternate">' + lang.imageAttributes.relAlternate + '</option>' +
-                  '<option value="author">' + lang.imageAttributes.relAuthor + '</option>' +
-                  '<option value="bookmark">' + lang.imageAttributes.relBookmark + '</option>' +
-                  '<option value="help">' + lang.imageAttributes.relHelp + '</option>' +
-                  '<option value="license">' + lang.imageAttributes.relLicense + '</option>' +
-                  '<option value="next">' + lang.imageAttributes.relNext + '</option>' +
-                  '<option value="nofollow">' + lang.imageAttributes.relNofollow + '</option>' +
-                  '<option value="noreferrer">' + lang.imageAttributes.relNoreferrer + '</option>' +
-                  '<option value="prefetch">' + lang.imageAttributes.relPrefetch + '</option>' +
-                  '<option value="prev">' + lang.imageAttributes.relPrev + '</option>' +
-                  '<option value="search">' + lang.imageAttributes.relSearch + '</option>' +
-                  '<option value="tag">' + lang.imageAttributes.relTag + '</option>' +
-                '</select>' +
-              '</div>' +
-            '</div>' +
-            '<div class="form-group">' +
-              '<label for="note-image-attributes-link-role" class="control-label col-xs-2">' + lang.imageAttributes.linkRole + '</label>' +
-              '<div class="input-group col-xs-10">' +
-                '<input type="text" id="note-image-attributes-link-role" class="note-image-attributes-link-role form-control">' +
-              '</div>' +
-            '</div>';
-          }
+        var body = '<ul class="nav nav-tabs">' +
+                   '  <li><a href="#note-imageAttributes" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
+                   '  <li><a href="#note-imageAttributes-attributes" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
+                   '  <li><a href="#note-imageAttributes-link" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
+        if (options.imageAttributes.disableUpload == false) {
+          body += '  <li><a href="#note-imageAttributes-upload" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
         }
+        body +=    '</ul>' +
+                   '<div class="tab-content" style="margin-top:20px;">' +
+                   // Tab 1
+                   '  <div class="tab-pane active" id="note-imageAttributes">'+
+                   '    <div class="note-form-group form-group note-group-imageAttributes-url">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.url + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-src form-control note-form-control note-input" type="text" />' +
+//                   '        <span class="input-group-btn">' +
+//                   '          <button class="btn btn-default class="note-imageAttributes-browse">' + lang.imageAttributes.browse + '</button>' +
+//                   '        </span>' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-title">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.title + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-title form-control note-form-control note-input" type="text" />' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-alt">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.alt + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-alt form-control note-form-control note-input" type="text" />' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-dimensions">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.dimensions + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-width form-control note-form-control note-input" type="text" />' +
+                   '        <span class="input-group-addon">x</span>' +
+                   '        <input class="note-imageAttributes-height form-control note-form-control note-input" type="text" />' +
+                   '      </div>' +
+                   '    </div>' +
+                   '  </div>' +
+                   // Tab 2
+                   '  <div class="tab-pane" id="note-imageAttributes-attributes">' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-class">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.class + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-class form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-style">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.style + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-style form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-role">' +
+                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.role + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-role form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '  </div>' +
+                   // Tab 3
+                   '  <div class="tab-pane" id="note-imageAttributes-link">' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-href">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkHref + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-href form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-target">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkTarget + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-target form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '      <small class="help-block text-right">' + lang.imageAttributes.linkTargetInfo + '</small>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-rel">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRel + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-rel form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '      <small class="help-block text-right">' + lang.imageAttributes.linkRelInfo + '</small>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-role">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRole + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-role form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '  </div>';
+      if (options.imageAttributes.disableUpload == false) {
+                   // Tab 4
+        body +=    '  <div class="tab-pane" id="note-imageAttributes-upload">' +
+                   '   <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.upload + '</label>' +
+                   '   <div class="input-group col-xs-12 col-sm-9">' +
+                   '     <input class="note-imageAttributes-input form-control note-form-control note-input" type="file" name="files" accept="image/*" multiple="multiple" />' +
+                         imageAttributesLimitation +
+                   '    </div>' +
+                   '  </div>';
+        }
+        body +=    '</div>';
         this.$dialog=ui.dialog({
           title: lang.imageAttributes.dialogTitle,
           body: body,
-          footer: '<button href="#" class="btn btn-primary note-image-attributes-btn">' + lang.imageAttributes.editBtn + '</button>'
+          footer: '<button href="#" class="btn btn-primary note-imageAttributes-btn">' + lang.imageAttributes.editBtn + '</button>'
         }).render().appendTo($container);
       };
       this.destroy=function(){
@@ -343,34 +215,40 @@
           title:   $img.attr('title'),
           src:     $img.attr('src'),
           alt:     $img.attr('alt'),
+          width:   $img.attr('width'),
+          height:  $img.attr('height'),
           role:    $img.attr('role'),
           class:   $img.attr('class'),
           style:   $img.attr('style'),
-          imgLink: $($img.context).parent().is("a") ? $($img.context).parent() : null
+          imgLink: $($img).parent().is("a") ? $($img).parent() : null
         };
         this.showImageAttributesDialog(imgInfo).then(function(imgInfo) {
           ui.hideDialog(self.$dialog);
           var $img = imgInfo.imgDom;
           if (options.imageAttributes.removeEmpty) {
-            if (imgInfo.alt)   $img.attr('alt',imgInfo.alt);     else $img.removeAttr('alt');
-            if (imgInfo.title) $img.attr('title',imgInfo.title); else $img.removeAttr('title');
-            if (imgInfo.src)   $img.attr('src',imgInfo.src);     else $img.attr('src', '#');
-            if (imgInfo.class) $img.attr('class',imgInfo.class); else $img.removeAttr('class');
-            if (imgInfo.style) $img.attr('style',imgInfo.style); else $img.removeAttr('style');
-            if (imgInfo.role)  $img.attr('role',imgInfo.role);   else $img.removeAttr('role');
+            if (imgInfo.alt)    $img.attr('alt',imgInfo.alt);       else $img.removeAttr('alt');
+            if (imgInfo.width)  $img.attr('width',imgInfo.width);   else $img.removeAttr('width');
+            if (imgInfo.height) $img.attr('height',imgInfo.height); else $img.removeAttr('height');
+            if (imgInfo.title)  $img.attr('title',imgInfo.title);   else $img.removeAttr('title');
+            if (imgInfo.src)    $img.attr('src',imgInfo.src);       else $img.attr('src', '#');
+            if (imgInfo.class)  $img.attr('class',imgInfo.class);   else $img.removeAttr('class');
+            if (imgInfo.style)  $img.attr('style',imgInfo.style);   else $img.removeAttr('style');
+            if (imgInfo.role)   $img.attr('role',imgInfo.role);     else $img.removeAttr('role');
           } else {
-            if (imgInfo.src)    $img.attr('src',imgInfo.src);     else $img.attr('src', '#');
+            if (imgInfo.src)    $img.attr('src',imgInfo.src);       else $img.attr('src', '#');
             $img.attr('alt',imgInfo.alt);
+            $img.attr('width',imgInfo.width);
+            $img.attr('height',imgInfo.height);
             $img.attr('title',imgInfo.title);
             $img.attr('class',imgInfo.class);
             $img.attr('style',imgInfo.style);
             $img.attr('role',imgInfo.role);
           }
           if($img.parent().is("a")) $img.unwrap();
-          if (imgInfo.href) {
+          if (imgInfo.linkHref) {
             var lnktxt = '<a';
             if (imgInfo.linkClass) lnktxt += ' class="' + imgInfo.linkClass + '"';
-            lnktxt += ' href="' + imgInfo.href + '" target="' + imgInfo.target + '"';
+            lnktxt += ' href="' + imgInfo.linkHref + '" target="' + imgInfo.linkTarget + '"';
             if (imgInfo.linkRel) lnktxt += ' rel="' + imgInfo.linkRel + '"';
             if (imgInfo.linkRole) lnktxt += ' role="' + imgInfo.linkRole + '"';
             lnktxt += '></a>';
@@ -382,19 +260,21 @@
       };
       this.showImageAttributesDialog=function(imgInfo) {
         return $.Deferred(function(deferred) {
-          var $imageTitle = self.$dialog.find('.note-image-attributes-title'),
-              $imageInput = self.$dialog.find('.note-image-input'),
-              $imageSrc   = self.$dialog.find('.note-image-attributes-src'),
-              $imageAlt   = self.$dialog.find('.note-image-attributes-alt'),
-              $imageClass = self.$dialog.find('.note-image-attributes-class'),
-              $imageStyle = self.$dialog.find('.note-image-attributes-style'),
-              $imageRole  = self.$dialog.find('.note-image-attributes-role'),
-              $linkHref   = self.$dialog.find('.note-image-attributes-href'),
-              $linkTarget = self.$dialog.find('.note-image-attributes-target'),
-              $linkClass  = self.$dialog.find('.note-image-attributes-link-class'),
-              $linkRel    = self.$dialog.find('.note-image-attributes-link-rel'),
-              $linkRole   = self.$dialog.find('.note-image-attributes-link-role'),
-              $editBtn    = self.$dialog.find('.note-image-attributes-btn');
+          var $imageTitle  = self.$dialog.find('.note-imageAttributes-title'),
+              $imageInput  = self.$dialog.find('.note-imageAttributes-input'),
+              $imageSrc    = self.$dialog.find('.note-imageAttributes-src'),
+              $imageAlt    = self.$dialog.find('.note-imageAttributes-alt'),
+              $imageWidth  = self.$dialog.find('.note-imageAttributes-width'),
+              $imageHeight = self.$dialog.find('.note-imageAttributes-height'),
+              $imageClass  = self.$dialog.find('.note-imageAttributes-class'),
+              $imageStyle  = self.$dialog.find('.note-imageAttributes-style'),
+              $imageRole   = self.$dialog.find('.note-imageAttributes-role'),
+              $linkHref    = self.$dialog.find('.note-imageAttributes-link-href'),
+              $linkTarget  = self.$dialog.find('.note-imageAttributes-link-target'),
+              $linkClass   = self.$dialog.find('.note-imageAttributes-link-class'),
+              $linkRel     = self.$dialog.find('.note-imageAttributes-link-rel'),
+              $linkRole    = self.$dialog.find('.note-imageAttributes-link-role'),
+              $editBtn     = self.$dialog.find('.note-imageAttributes-btn');
           $linkHref.val();
           $linkClass.val();
           $linkRole.val();
@@ -404,12 +284,8 @@
             $linkHref.val(imgInfo.imgLink.attr('href'));
             $linkClass.val(imgInfo.imgLink.attr('class'));
             $linkRole.val(imgInfo.imgLink.attr('role'));
-            $linkTarget.find('option').each(function() {
-              if ($(this).val() == imgInfo.imgLink.attr('target')) $(this).attr('selected','selected');
-            });
-            $linkRel.find('option').each(function() {
-              if ($(this).val() == imgInfo.imgLink.attr('rel')) $(this).attr('selected','selected');
-            });
+            $linkTarget.val(imgInfo.imgLink.attr('target'));
+            $linkRel.val(imgInfo.imgLink.attr('rel'));
           }
           ui.onDialogShown(self.$dialog,function() {
             context.triggerEvent('dialog.shown');
@@ -430,26 +306,31 @@
             $editBtn.click(function(e) {
               e.preventDefault();
               deferred.resolve({
-                imgDom:    imgInfo.imgDom,
-                title:     $imageTitle.val(),
-                src:       $imageSrc.val(),
-                alt:       $imageAlt.val(),
-                class:     $imageClass.val(),
-                style:     $imageStyle.val(),
-                role:      $imageRole.val(),
-                href:      $linkHref.val(),
-                target:    $linkTarget.val(),
-                linkClass: $linkClass.val(),
-                linkRel:   $linkRel.val(),
-                linkRole:  $linkRole.val()
+                imgDom:     imgInfo.imgDom,
+                title:      $imageTitle.val(),
+                src:        $imageSrc.val(),
+                alt:        $imageAlt.val(),
+                width:      $imageWidth.val(),
+                height:     $imageHeight.val(),
+                class:      $imageClass.val(),
+                style:      $imageStyle.val(),
+                role:       $imageRole.val(),
+                linkHref:   $linkHref.val(),
+                linkTarget: $linkTarget.val(),
+                linkClass:  $linkClass.val(),
+                linkRel:    $linkRel.val(),
+                linkRole:   $linkRole.val()
               });
             });
-            $imageTitle.val(imgInfo.title).focus;
-            $imageSrc.val(imgInfo.src)
+            $imageTitle.val(imgInfo.title);
+            $imageSrc.val(imgInfo.src);
             $imageAlt.val(imgInfo.alt);
+            $imageWidth.val(imgInfo.width);
+            $imageHeight.val(imgInfo.height);
             $imageClass.val(imgInfo.class);
             $imageStyle.val(imgInfo.style);
             $imageRole.val(imgInfo.role);
+            
             self.bindEnterKey($editBtn);
             self.bindLabels();
           });
