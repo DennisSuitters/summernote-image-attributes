@@ -40,6 +40,8 @@
           linkHref: 'URL',
           linkTarget: 'Target',
           linkTargetInfo: 'Options: _self, _blank, _top, _parent',
+          linkClass: 'Class',
+          linkStyle: 'Style',
           linkRel: 'Rel',
           linkRelInfo: 'Options: alternate, author, bookmark, help, license, next, nofollow, noreferrer, prefetch, prev, search, tag',
           linkRole: 'Role',
@@ -162,6 +164,18 @@
                    '      </div>' +
                    '      <small class="help-block text-right">' + lang.imageAttributes.linkTargetInfo + '</small>' +
                    '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-class">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkClass + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-class form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
+                   '    <div class="note-form-group form-group note-group-imageAttributes-link-style">' +
+                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkStyle + '</label>' +
+                   '      <div class="input-group col-xs-12 col-sm-9">' +
+                   '        <input class="note-imageAttributes-link-style form-control note-form-control note-input" type="text">' +
+                   '      </div>' +
+                   '    </div>' +
                    '    <div class="note-form-group form-group note-group-imageAttributes-link-rel">' +
                    '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRel + '</label>' +
                    '      <div class="input-group col-xs-12 col-sm-9">' +
@@ -246,13 +260,14 @@
           }
           if($img.parent().is("a")) $img.unwrap();
           if (imgInfo.linkHref) {
-            var lnktxt = '<a';
-            if (imgInfo.linkClass) lnktxt += ' class="' + imgInfo.linkClass + '"';
-            lnktxt += ' href="' + imgInfo.linkHref + '" target="' + imgInfo.linkTarget + '"';
-            if (imgInfo.linkRel) lnktxt += ' rel="' + imgInfo.linkRel + '"';
-            if (imgInfo.linkRole) lnktxt += ' role="' + imgInfo.linkRole + '"';
-            lnktxt += '></a>';
-            $img.wrap(lnktxt);
+            var linkBody = '<a';
+            if (imgInfo.linkClass) linkBody += ' class="' + imgInfo.linkClass + '"';
+            if (imgInfo.linkStyle) linkBody += ' style="' + imgInfo.linkStyle + '"';
+            linkBody += ' href="' + imgInfo.linkHref + '" target="' + imgInfo.linkTarget + '"';
+            if (imgInfo.linkRel) linkBody += ' rel="' + imgInfo.linkRel + '"';
+            if (imgInfo.linkRole) linkBody += ' role="' + imgInfo.linkRole + '"';
+            linkBody += '></a>';
+            $img.wrap(linkBody);
           }
           $note.val(context.invoke('code'));
           $note.change();
@@ -272,17 +287,20 @@
               $linkHref    = self.$dialog.find('.note-imageAttributes-link-href'),
               $linkTarget  = self.$dialog.find('.note-imageAttributes-link-target'),
               $linkClass   = self.$dialog.find('.note-imageAttributes-link-class'),
+              $linkStyle   = self.$dialog.find('.note-imageAttributes-link-style'),
               $linkRel     = self.$dialog.find('.note-imageAttributes-link-rel'),
               $linkRole    = self.$dialog.find('.note-imageAttributes-link-role'),
               $editBtn     = self.$dialog.find('.note-imageAttributes-btn');
           $linkHref.val();
           $linkClass.val();
+          $linkStyle.val();
           $linkRole.val();
           $linkTarget.val();
           $linkRel.val();
           if (imgInfo.imgLink) {
             $linkHref.val(imgInfo.imgLink.attr('href'));
             $linkClass.val(imgInfo.imgLink.attr('class'));
+            $linkStyle.val(imgInfo.imgLink.attr('style'));
             $linkRole.val(imgInfo.imgLink.attr('role'));
             $linkTarget.val(imgInfo.imgLink.attr('target'));
             $linkRel.val(imgInfo.imgLink.attr('rel'));
@@ -318,6 +336,7 @@
                 linkHref:   $linkHref.val(),
                 linkTarget: $linkTarget.val(),
                 linkClass:  $linkClass.val(),
+                linkStyle:  $linkStyle.val(),
                 linkRel:    $linkRel.val(),
                 linkRole:   $linkRole.val()
               });

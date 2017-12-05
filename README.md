@@ -19,7 +19,6 @@ Include the following code after including Summernote, to change the language fr
 
 #### 2. Supported languages
 Currently available in US English (Default), Spanish, French, Chinese (Traditional), Italian, German and Turkish!
-Language files will be updated shortly.
 
 #### 3. Summernote options
 Finally, customize the Summernote image popover.
