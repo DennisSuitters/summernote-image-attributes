@@ -8,14 +8,14 @@
     factory(window.jQuery);
   }
 }(function ($) {
-  var readFileAsDataURL = function(file) {
-    return $.Deferred(function(deferred) {
+  var readFileAsDataURL = function (file) {
+    return $.Deferred( function (deferred) {
       $.extend(new FileReader(),{
-        onload:function(e) {
+        onload: function (e) {
           var sDataURL = e.target.result;
           deferred.resolve(sDataURL);
         },
-        onerror:function() {
+        onerror: function () {
           deferred.reject(this);
         }
       }).readAsDataURL(file);
@@ -61,43 +61,43 @@
     }
   });
   $.extend($.summernote.plugins, {
-    'imageAttributes':function(context) {
-      var self = this;
-      var ui = $.summernote.ui;
-      var $note = context.layoutInfo.note;
-      var $editor = context.layoutInfo.editor;
-      var $editable = context.layoutInfo.editable;
-      var options = context.options;
-      var lang = options.langInfo;
-      var imageAttributesLimitation = '';
+    'imageAttributes': function (context) {
+      var self      = this,
+          ui        = $.summernote.ui,
+          $note     = context.layoutInfo.note,
+          $editor   = context.layoutInfo.editor,
+          $editable = context.layoutInfo.editable,
+          options   = context.options,
+          lang      = options.langInfo,
+          imageAttributesLimitation = '';
       if (options.maximumImageFileSize) {
         var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
         var readableSize = (options.maximumImageFileSize/Math.pow(1024,unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
         imageAttributesLimitation = '<small class="help-block">' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
       }
-      context.memo('button.imageAttributes',function() {
+      context.memo('button.imageAttributes', function() {
         var button = ui.button({
           contents: options.imageAttributes.icon,
-          tooltip: lang.imageAttributes.tooltip,
-          click:function(e) {
+          tooltip:  lang.imageAttributes.tooltip,
+          click: function () {
             context.invoke('imageAttributes.show');
           }
         });
         return button.render();
       });
-      this.initialize=function() {
+      this.initialize = function () {
         var $container = options.dialogsInBody ? $(document.body) : $editor;
         var body = '<ul class="nav nav-tabs">' +
                    '  <li><a href="#note-imageAttributes" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
                    '  <li><a href="#note-imageAttributes-attributes" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
                    '  <li><a href="#note-imageAttributes-link" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
         if (options.imageAttributes.disableUpload == false) {
-          body += '  <li><a href="#note-imageAttributes-upload" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
+           body += '  <li><a href="#note-imageAttributes-upload" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
         }
         body +=    '</ul>' +
                    '<div class="tab-content" style="margin-top:20px;">' +
                    // Tab 1
-                   '  <div class="tab-pane active" id="note-imageAttributes">'+
+                   '  <div class="tab-pane active" id="note-imageAttributes">' +
                    '    <div class="note-form-group form-group note-group-imageAttributes-url">' +
                    '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.url + '</label>' +
                    '      <div class="input-group col-xs-12 col-sm-9">' +
@@ -202,28 +202,28 @@
         }
         body +=    '</div>';
         this.$dialog=ui.dialog({
-          title: lang.imageAttributes.dialogTitle,
-          body: body,
+          title:  lang.imageAttributes.dialogTitle,
+          body:   body,
           footer: '<button href="#" class="btn btn-primary note-imageAttributes-btn">' + lang.imageAttributes.editBtn + '</button>'
         }).render().appendTo($container);
       };
-      this.destroy=function(){
+      this.destroy = function () {
         ui.hideDialog(this.$dialog);
         this.$dialog.remove();
       };
-      this.bindEnterKey=function($input,$btn) {
-        $input.on('keypress',function(event) {
-          if (event.keyCode===13) $btn.trigger('click');
+      this.bindEnterKey = function ($input,$btn) {
+        $input.on('keypress', function (e) {
+          if (e.keyCode === 13) $btn.trigger('click');
         });
       };
-      this.bindLabels=function() {
+      this.bindLabels = function () {
         self.$dialog.find('.form-control:first').focus().select();
-        self.$dialog.find('label').on('click',function() {
+        self.$dialog.find('label').on('click', function () {
           $(this).parent().find('.form-control:first').focus();
         });
       };
-      this.show=function() {
-        var $img = $($editable.data('target'));
+      this.show = function () {
+        var $img    = $($editable.data('target'));
         var imgInfo = {
           imgDom:  $img,
           title:   $img.attr('title'),
@@ -236,27 +236,27 @@
           style:   $img.attr('style'),
           imgLink: $($img).parent().is("a") ? $($img).parent() : null
         };
-        this.showImageAttributesDialog(imgInfo).then(function(imgInfo) {
+        this.showImageAttributesDialog(imgInfo).then( function (imgInfo) {
           ui.hideDialog(self.$dialog);
           var $img = imgInfo.imgDom;
           if (options.imageAttributes.removeEmpty) {
-            if (imgInfo.alt)    $img.attr('alt',imgInfo.alt);       else $img.removeAttr('alt');
-            if (imgInfo.width)  $img.attr('width',imgInfo.width);   else $img.removeAttr('width');
+            if (imgInfo.alt)    $img.attr('alt',   imgInfo.alt);    else $img.removeAttr('alt');
+            if (imgInfo.width)  $img.attr('width', imgInfo.width);  else $img.removeAttr('width');
             if (imgInfo.height) $img.attr('height',imgInfo.height); else $img.removeAttr('height');
-            if (imgInfo.title)  $img.attr('title',imgInfo.title);   else $img.removeAttr('title');
-            if (imgInfo.src)    $img.attr('src',imgInfo.src);       else $img.attr('src', '#');
-            if (imgInfo.class)  $img.attr('class',imgInfo.class);   else $img.removeAttr('class');
-            if (imgInfo.style)  $img.attr('style',imgInfo.style);   else $img.removeAttr('style');
-            if (imgInfo.role)   $img.attr('role',imgInfo.role);     else $img.removeAttr('role');
+            if (imgInfo.title)  $img.attr('title', imgInfo.title);  else $img.removeAttr('title');
+            if (imgInfo.src)    $img.attr('src',   imgInfo.src);    else $img.attr('src', '#');
+            if (imgInfo.class)  $img.attr('class', imgInfo.class);  else $img.removeAttr('class');
+            if (imgInfo.style)  $img.attr('style', imgInfo.style);  else $img.removeAttr('style');
+            if (imgInfo.role)   $img.attr('role',  imgInfo.role);   else $img.removeAttr('role');
           } else {
-            if (imgInfo.src)    $img.attr('src',imgInfo.src);       else $img.attr('src', '#');
-            $img.attr('alt',imgInfo.alt);
-            $img.attr('width',imgInfo.width);
-            $img.attr('height',imgInfo.height);
-            $img.attr('title',imgInfo.title);
-            $img.attr('class',imgInfo.class);
-            $img.attr('style',imgInfo.style);
-            $img.attr('role',imgInfo.role);
+            if (imgInfo.src)    $img.attr('src',   imgInfo.src);    else $img.attr('src', '#');
+            $img.attr('alt',    imgInfo.alt);
+            $img.attr('width',  imgInfo.width);
+            $img.attr('height', imgInfo.height);
+            $img.attr('title',  imgInfo.title);
+            $img.attr('class',  imgInfo.class);
+            $img.attr('style',  imgInfo.style);
+            $img.attr('role',   imgInfo.role);
           }
           if($img.parent().is("a")) $img.unwrap();
           if (imgInfo.linkHref) {
@@ -273,8 +273,8 @@
           $note.change();
         });
       };
-      this.showImageAttributesDialog=function(imgInfo) {
-        return $.Deferred(function(deferred) {
+      this.showImageAttributesDialog = function (imgInfo) {
+        return $.Deferred( function (deferred) {
           var $imageTitle  = self.$dialog.find('.note-imageAttributes-title'),
               $imageInput  = self.$dialog.find('.note-imageAttributes-input'),
               $imageSrc    = self.$dialog.find('.note-imageAttributes-src'),
@@ -305,23 +305,23 @@
             $linkTarget.val(imgInfo.imgLink.attr('target'));
             $linkRel.val(imgInfo.imgLink.attr('rel'));
           }
-          ui.onDialogShown(self.$dialog,function() {
+          ui.onDialogShown(self.$dialog, function () {
             context.triggerEvent('dialog.shown');
             $imageInput.replaceWith(
-              $imageInput.clone().on('change',function() {
+              $imageInput.clone().on('change', function () {
                 var callbacks = options.callbacks;
                 if (callbacks.onImageUpload) {
                   context.triggerEvent('image.upload',this.files[0]);
                 } else {
-                  readFileAsDataURL(this.files[0]).then(function(dataURL) {
+                  readFileAsDataURL(this.files[0]).then( function (dataURL) {
                     $imageSrc.val(dataURL);
-                  }).fail(function() {
+                  }).fail( function () {
                     context.triggerEvent('image.upload.error');
                   });
                 }
               }).val('')
             );
-            $editBtn.click(function(e) {
+            $editBtn.click( function (e) {
               e.preventDefault();
               deferred.resolve({
                 imgDom:     imgInfo.imgDom,
@@ -349,11 +349,10 @@
             $imageClass.val(imgInfo.class);
             $imageStyle.val(imgInfo.style);
             $imageRole.val(imgInfo.role);
-            
             self.bindEnterKey($editBtn);
             self.bindLabels();
           });
-          ui.onDialogHidden(self.$dialog,function() {
+          ui.onDialogHidden(self.$dialog, function () {
             $editBtn.off('click');
             if (deferred.state() === 'pending') deferred.reject();
           });
