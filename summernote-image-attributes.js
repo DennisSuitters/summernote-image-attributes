@@ -73,7 +73,7 @@
       if (options.maximumImageFileSize) {
         var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
         var readableSize = (options.maximumImageFileSize/Math.pow(1024,unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
-        imageAttributesLimitation = '<small class="help-block">' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
+        imageAttributesLimitation = '<small class="help-block note-help-block">' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
       }
       context.memo('button.imageAttributes', function() {
         var button = ui.button({
