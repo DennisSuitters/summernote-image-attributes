@@ -89,7 +89,7 @@
         var $container = options.dialogsInBody ? $(document.body) : $editor;
         var timestamp = Date.now();
         var body = '<ul class="nav note-nav nav-tabs note-nav-tabs">' +
-                   '  <li><a href="#note-imageAttributes' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
+                   '  <li class="active"><a href="#note-imageAttributes' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
                    '  <li><a href="#note-imageAttributes-attributes' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
                    '  <li><a href="#note-imageAttributes-link' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
         if (options.imageAttributes.disableUpload == false) {
@@ -170,7 +170,7 @@
                    '  </div>';
         }
         // Tab 1
-        body +=    '  <div class="tab-pane note-tab-pane" id="note-imageAttributes' + timestamp + '">' +
+        body +=    '  <div class="tab-pane note-tab-pane fade in active" id="note-imageAttributes' + timestamp + '">' +
                    '    <div class="note-form-group form-group note-group-imageAttributes-url">' +
                    '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.src + '</label>' +
                    '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
