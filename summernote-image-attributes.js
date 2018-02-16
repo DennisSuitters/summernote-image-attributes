@@ -340,6 +340,8 @@
                 linkStyle:  $linkStyle.val(),
                 linkRel:    $linkRel.val(),
                 linkRole:   $linkRole.val()
+              }).then((img) => {
+                context.triggerEvent('change', $editable.html());
               });
             });
             $imageTitle.val(imgInfo.title);
