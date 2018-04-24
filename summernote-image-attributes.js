@@ -340,7 +340,7 @@
                 linkStyle:  $linkStyle.val(),
                 linkRel:    $linkRel.val(),
                 linkRole:   $linkRole.val()
-              }).then((img) => {
+              }).then(function (img) {
                 context.triggerEvent('change', $editable.html());
               });
             });
