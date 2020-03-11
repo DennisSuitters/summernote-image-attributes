@@ -1,6 +1,6 @@
 # summernote-image-attributes
 
-Summernote-image-attributes has undergone a make over, we redesigned the Dialog Layout to make it easier to use.
+Summernote-image-attributes has undergone a make over, we redesigned the Dialog Layout to make it easier to use. New classes have been submitted to the Summernote main Repository, be sure to grab the latest master and build it for the class styling additions.
 
 A plugin for the [Summernote](https://github.com/summernote/summernote/) WYSIWYG editor.
 

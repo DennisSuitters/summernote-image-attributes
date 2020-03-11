@@ -78,6 +78,7 @@
       context.memo('button.imageAttributes', function() {
         var button = ui.button({
           contents: options.imageAttributes.icon,
+          container: "body",
           tooltip:  lang.imageAttributes.tooltip,
           click: function () {
             context.invoke('imageAttributes.show');
@@ -87,121 +88,117 @@
       });
       this.initialize = function () {
         var $container = options.dialogsInBody ? $(document.body) : $editor;
-        var timestamp = Date.now();
         var body = '<ul class="nav note-nav nav-tabs note-nav-tabs">' +
-                   '  <li class="active"><a href="#note-imageAttributes' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
-                   '  <li><a href="#note-imageAttributes-attributes' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
-                   '  <li><a href="#note-imageAttributes-link' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
+                      '<li class="nav-item note-nav-item active"><a class="nav-link note-nav-link active" href="#note-imageAttributes" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
+                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-attributes" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
+                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-link" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
         if (options.imageAttributes.disableUpload == false) {
-           body += '  <li><a href="#note-imageAttributes-upload' + timestamp + '" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
+           body +=    '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-upload" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
         }
-        body +=    '</ul>' +
-                   '<div class="tab-content note-tab-content">' +
-                   // Tab 2
-                   '  <div class="tab-pane note-tab-pane" id="note-imageAttributes-attributes' + timestamp + '">' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-class">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.class + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-class form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-style">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.style + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-style form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-role">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.role + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-role form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '  </div>' +
-                   // Tab 3
-                   '  <div class="tab-pane note-tab-pane" id="note-imageAttributes-link' + timestamp + '">' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-href">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkHref + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-href form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-target">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkTarget + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-target form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '      <small class="help-block note-help-block text-right">' + lang.imageAttributes.linkTargetInfo + '</small>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-class">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkClass + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-class form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-style">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkStyle + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-style form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-rel">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRel + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-rel form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '      <small class="help-block note-help-block text-right">' + lang.imageAttributes.linkRelInfo + '</small>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-link-role">' +
-                   '      <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRole + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-link-role form-control note-form-control note-input" type="text">' +
-                   '      </div>' +
-                   '    </div>' +
-                   '  </div>';
+        body +=     '</ul>' +
+                    '<div class="tab-content note-tab-content">' +
+// Tab 2
+                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-attributes">' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-class">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.class + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-class form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-style">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.style + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-style form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-role">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.role + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-role form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+// Tab 3
+                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-link">' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-href">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkHref + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-href form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-target">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkTarget + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-target form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                        '<small class="help-block note-help-block text-right">' + lang.imageAttributes.linkTargetInfo + '</small>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-class">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkClass + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-class form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-style">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkStyle + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-style form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-rel">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRel + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-rel form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                        '<small class="help-block note-help-block text-right">' + lang.imageAttributes.linkRelInfo + '</small>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-link-role">' +
+                        '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkRole + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-link-role form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>';
       if (options.imageAttributes.disableUpload == false) {
-                   // Tab 4
-        body +=    '  <div class="tab-pane note-tab-pane" id="note-imageAttributes-upload' + timestamp + '">' +
-                   '   <label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.upload + '</label>' +
-                   '   <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '     <input class="note-imageAttributes-input form-control note-form-control note-input" type="file" name="files" accept="image/*" multiple="multiple" />' +
-                         imageAttributesLimitation +
-                   '    </div>' +
-                   '  </div>';
+// Tab 4
+        body +=     '<div class="tab-pane note-tab-pane" id="note-imageAttributes-upload">' +
+                      '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.upload + '</label>' +
+                      '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                        '<input class="note-imageAttributes-input form-control note-form-control note-input" type="file" name="files" accept="image/*" multiple="multiple">' +
+                        imageAttributesLimitation +
+                      '</div>' +
+                    '</div>';
         }
-        // Tab 1
-        body +=    '  <div class="tab-pane note-tab-pane fade in active" id="note-imageAttributes' + timestamp + '">' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-url">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.src + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-src form-control note-form-control note-input" type="text" />' +
-//                   '        <span class="input-group-btn">' +
-//                   '          <button class="btn btn-default class="note-imageAttributes-browse">' + lang.imageAttributes.browse + '</button>' +
-//                   '        </span>' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-title">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.title + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-title form-control note-form-control note-input" type="text" />' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-alt">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.alt + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-alt form-control note-form-control note-input" type="text" />' +
-                   '      </div>' +
-                   '    </div>' +
-                   '    <div class="note-form-group form-group note-group-imageAttributes-dimensions">' +
-                   '      <label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.dimensions + '</label>' +
-                   '      <div class="input-group note-input-group col-xs-12 col-sm-9">' +
-                   '        <input class="note-imageAttributes-width form-control note-form-control note-input" type="text" />' +
-                   '        <span class="input-group-addon note-input-group-addon">x</span>' +
-                   '        <input class="note-imageAttributes-height form-control note-form-control note-input" type="text" />' +
-                   '      </div>' +
-                   '    </div>' +
-                   '  </div>' +
-                   '</div>';
+// Tab 1
+        body +=     '<div class="tab-pane note-tab-pane fade in active" id="note-imageAttributes">' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-url">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.src + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-src form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-title">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.title + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-title form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-alt">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.alt + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-alt form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="note-form-group form-group note-group-imageAttributes-dimensions">' +
+                        '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.dimensions + '</label>' +
+                        '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
+                          '<input class="note-imageAttributes-width form-control note-form-control note-input" type="text">' +
+                          '<span class="input-group-addon note-input-group-addon">x</span>' +
+                          '<input class="note-imageAttributes-height form-control note-form-control note-input" type="text">' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>';
         this.$dialog=ui.dialog({
           title:  lang.imageAttributes.dialogTitle,
           body:   body,
