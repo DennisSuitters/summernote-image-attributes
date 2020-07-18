@@ -75,6 +75,9 @@
         var readableSize = (options.maximumImageFileSize/Math.pow(1024,unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
         imageAttributesLimitation = '<small class="help-block note-help-block">' + lang.image.maximumFileSize + ' : ' + readableSize+'</small>';
       }
+      if(! ('_counter' in $.summernote.options.imageAttributes)) {
+        $.summernote.options.imageAttributes._counter = 0;
+      }
       context.memo('button.imageAttributes', function() {
         var button = ui.button({
           contents: options.imageAttributes.icon,
@@ -88,17 +91,20 @@
       });
       this.initialize = function () {
         var $container = options.dialogsInBody ? $(document.body) : $editor;
+        $.summernote.options.imageAttributes._counter++;
+        var i = $.summernote.options.imageAttributes._counter;
+        // console.log('indice for imageAttribute : ', i);
         var body = '<ul class="nav note-nav nav-tabs note-nav-tabs">' +
-                      '<li class="nav-item note-nav-item active"><a class="nav-link note-nav-link active" href="#note-imageAttributes" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
-                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-attributes" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
-                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-link" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
+                      '<li class="nav-item note-nav-item active"><a class="nav-link note-nav-link active" href="#note-imageAttributes-' + i + '" data-toggle="tab">' + lang.imageAttributes.tabImage + '</a></li>' +
+                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-attributes-' + i + '" data-toggle="tab">' + lang.imageAttributes.tabAttributes + '</a></li>' +
+                      '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-link-' + i + '" data-toggle="tab">' + lang.imageAttributes.tabLink + '</a></li>';
         if (options.imageAttributes.disableUpload == false) {
-           body +=    '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-upload" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
+           body +=    '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-upload-' + i + '" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
         }
         body +=     '</ul>' +
                     '<div class="tab-content note-tab-content">' +
 // Tab 2
-                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-attributes">' +
+                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-attributes-' + i + '">' +
                       '<div class="note-form-group form-group note-group-imageAttributes-class">' +
                         '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.class + '</label>' +
                         '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
@@ -119,7 +125,7 @@
                       '</div>' +
                     '</div>' +
 // Tab 3
-                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-link">' +
+                    '<div class="tab-pane note-tab-pane" id="note-imageAttributes-link-' + i + '">' +
                       '<div class="note-form-group form-group note-group-imageAttributes-link-href">' +
                         '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.linkHref + '</label>' +
                         '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
@@ -161,7 +167,7 @@
                     '</div>';
       if (options.imageAttributes.disableUpload == false) {
 // Tab 4
-        body +=     '<div class="tab-pane note-tab-pane" id="note-imageAttributes-upload">' +
+        body +=     '<div class="tab-pane note-tab-pane" id="note-imageAttributes-upload-' + i + '">' +
                       '<label class="control-label note-form-label col-xs-3">' + lang.imageAttributes.upload + '</label>' +
                       '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
                         '<input class="note-imageAttributes-input form-control note-form-control note-input" type="file" name="files" accept="image/*" multiple="multiple">' +
@@ -170,7 +176,7 @@
                     '</div>';
         }
 // Tab 1
-        body +=     '<div class="tab-pane note-tab-pane fade in active" id="note-imageAttributes">' +
+        body +=     '<div class="tab-pane note-tab-pane fade in active" id="note-imageAttributes-' + i + '">' +
                       '<div class="note-form-group form-group note-group-imageAttributes-url">' +
                         '<label class="control-label note-form-label col-sm-3">' + lang.imageAttributes.src + '</label>' +
                         '<div class="input-group note-input-group col-xs-12 col-sm-9">' +
