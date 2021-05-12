@@ -22,7 +22,7 @@ $.extend(true,$.summernote.lang,{
         linkRel: 'Relație (rel)',
         linkRelInfo: 'Opțiuni: alternate, author, bookmark, help, license, next, nofollow, noreferrer, prefetch, prev, search, tag',
         linkRole: 'Rol',
-      tabUpload: 'Încarcă imagine',
+      tabUpload: 'Înlocuiește imaginea',
         upload: 'Încarcă',
       tabBrowse: 'Răsfoiește',
       editBtn: 'OK'
