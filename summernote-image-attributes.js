@@ -102,7 +102,7 @@
            body +=    '<li class="nav-item note-nav-item"><a class="nav-link note-nav-link" href="#note-imageAttributes-upload-' + i + '" data-toggle="tab">' + lang.imageAttributes.tabUpload + '</a></li>';
         }
         body +=     '</ul>' +
-                    '<div class="tab-content note-tab-content">' +
+                    '<div class="tab-content">' +
 // Tab 2
                     '<div class="tab-pane note-tab-pane" id="note-imageAttributes-attributes-' + i + '">' +
                       '<div class="note-form-group form-group note-group-imageAttributes-class">' +
