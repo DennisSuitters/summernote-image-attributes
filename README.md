@@ -61,3 +61,5 @@ $(document).ready(function() {
   - Thank you to [YaWK](https://github.com/YaWK)
 - Turkish Translation
   - Thank you to [GoktugOzturk](https://github.com/GoktugOzturk)
+- Romanian Translation
+  - Thank you to [condor2](https://github.com/condor2)
