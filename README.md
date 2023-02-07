@@ -10,12 +10,19 @@ Adds a button to the image popover to edit title, alt, class and style attribute
 
 #### 1. Include JS
 
-Include the following code after including Summernote, to change the language from the default (en-US) you must add the lang file after the plugin.
+Include the following code after including Summernote, to change the language from the default (en-US) you must add the lang file after the plugin.  
 
-````html
+**if you use bootstrap5**, you must add **/bootstrap5/**summernote-image-attributes.js instead of summernote-image-attributes.js
+
+```html
 <script src="summernote-image-attributes.js"></script>
+OR
+<script src="/bootstrap5/summernote-image-attributes.js"></script>
+```
+
+```html
 <script src="lang/[language-COUNTRY].js"></script>
-````
+```
 
 #### 2. Supported languages
 Currently available in US English (Default), Spanish, French, Chinese (Traditional), Italian, German and Turkish!
