@@ -1,10 +1,10 @@
 {
   "name": "summernote-image-attributes",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Summernote plugin to edit image attributes",
   "main": "summernote-image-attributes.js",
   "author": "DiemenDesign",
   "dependencies": {
-    "summernote": "^0.8.2"
+    "summernote": "^0.9.1"
   }
 }
